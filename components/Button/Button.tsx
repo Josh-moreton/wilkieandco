@@ -1,11 +1,13 @@
 import { cva, type VariantProps } from "class-variance-authority"
 
-import { twMerge } from "tailwind-merge"
+import { Button as ShadcnButton } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
-const button = cva(
+// Legacy button variants for backward compatibility
+const legacyButton = cva(
   [
     "justify-center",
-    "inline-flex",
+    "inline-flex", 
     "items-center",
     "rounded-xl",
     "text-center",
@@ -27,21 +29,24 @@ const button = cva(
       underline: { true: ["underline"], false: [] },
     },
     defaultVariants: {
-      intent: "primary",
+      intent: "primary", 
       size: "lg",
     },
   }
 )
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLAnchorElement>, VariantProps<typeof button> {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLAnchorElement>, VariantProps<typeof legacyButton> {
   underline?: boolean
   href: string
 }
 
 export function Button({ className, intent, size, underline, ...props }: ButtonProps) {
   return (
-    <a className={twMerge(button({ intent, size, className, underline }))} {...props}>
+    <a className={cn(legacyButton({ intent, size, className, underline }))} {...props}>
       {props.children}
     </a>
   )
 }
+
+// Export the new shadcn button for new usage
+export { ShadcnButton as ShadcnButton }
