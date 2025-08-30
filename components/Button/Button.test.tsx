@@ -29,4 +29,26 @@ describe("Button", () => {
     expect(link).toHaveClass("text-sm")
     expect(link).toHaveClass("min-w-20")
   })
+
+  it("renders without animation when disableAnimation is true", () => {
+    const { container } = render(
+      <Button href="/test" disableAnimation>
+        No Animation
+      </Button>
+    )
+    const link = container.querySelector("a")
+    expect(link).toBeInTheDocument()
+    expect(screen.getByText("No Animation")).toBeInTheDocument()
+  })
+
+  it("renders with animation by default", () => {
+    const { container } = render(
+      <Button href="/test">
+        With Animation
+      </Button>
+    )
+    const link = container.querySelector("a")
+    expect(link).toBeInTheDocument()
+    expect(screen.getByText("With Animation")).toBeInTheDocument()
+  })
 })

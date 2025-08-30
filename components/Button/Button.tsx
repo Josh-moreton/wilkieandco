@@ -1,4 +1,7 @@
+"use client"
+
 import { cva, type VariantProps } from "class-variance-authority"
+import { motion } from "framer-motion"
 
 import { twMerge } from "tailwind-merge"
 
@@ -36,12 +39,30 @@ const button = cva(
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLAnchorElement>, VariantProps<typeof button> {
   underline?: boolean
   href: string
+  disableAnimation?: boolean
 }
 
-export function Button({ className, intent, size, underline, ...props }: ButtonProps) {
+export function Button({ className, intent, size, underline, disableAnimation = false, ...props }: ButtonProps) {
+  const buttonClasses = twMerge(button({ intent, size, className, underline }))
+  
+  if (disableAnimation) {
+    return (
+      <a className={buttonClasses} {...props}>
+        {props.children}
+      </a>
+    )
+  }
+
   return (
-    <a className={twMerge(button({ intent, size, className, underline }))} {...props}>
-      {props.children}
-    </a>
+    <motion.div
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      transition={{ type: "spring", stiffness: 400, damping: 17 }}
+      style={{ display: "inline-block" }}
+    >
+      <a className={buttonClasses} {...props}>
+        {props.children}
+      </a>
+    </motion.div>
   )
 }
