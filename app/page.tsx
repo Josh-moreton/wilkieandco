@@ -40,8 +40,12 @@ export default function Web() {
             <Button
               href="https://vercel.com/new/git/external?repository-url=https://github.com/Blazity/next-enterprise"
               intent="secondary"
+              className="mr-3"
             >
               Deploy Now
+            </Button>
+            <Button href="/contact" intent="secondary">
+              Contact Us
             </Button>
           </div>
         </div>

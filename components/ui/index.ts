@@ -4,4 +4,5 @@ export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 export { Input } from "./input"
 export { Label } from "./label"
 export { Switch } from "./switch"
+export { Textarea } from "./textarea"
 export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip"
