@@ -1,17 +1,29 @@
-import { Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Input } from "@/components/ui"
+import { 
+  Badge, 
+  Button, 
+  Card, 
+  CardContent, 
+  CardDescription, 
+  CardHeader, 
+  CardTitle, 
+  Input,
+  MotionBox,
+  MotionButton,
+  MotionCard
+} from "@/components/ui"
 
 export default function ComponentsPage() {
   return (
     <div className="container mx-auto p-8 space-y-8">
-      <div className="space-y-2">
+      <MotionBox animation="fadeInDown" className="space-y-2">
         <h1 className="text-3xl font-bold">Design System Components</h1>
         <p className="text-muted-foreground">
-          Built with Radix UI, CVA, and Tailwind CSS using shadcn/ui patterns.
+          Built with Radix UI, CVA, Tailwind CSS, and Framer Motion for smooth animations.
         </p>
-      </div>
+      </MotionBox>
 
       <div className="grid gap-8 md:grid-cols-2">
-        <Card>
+        <MotionCard animation="slideUp" delay="short">
           <CardHeader>
             <CardTitle>Buttons</CardTitle>
             <CardDescription>
@@ -32,9 +44,30 @@ export default function ComponentsPage() {
               <Button size="lg">Large</Button>
             </div>
           </CardContent>
-        </Card>
+        </MotionCard>
 
-        <Card>
+        <MotionCard animation="slideUp" delay="medium">
+          <CardHeader>
+            <CardTitle>Motion Buttons</CardTitle>
+            <CardDescription>
+              Interactive buttons with hover, tap, and focus animations.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex flex-wrap gap-2">
+              <MotionButton>Hover me!</MotionButton>
+              <MotionButton variant="secondary" motionType="hover">Hover only</MotionButton>
+              <MotionButton variant="outline" motionType="tap">Tap me!</MotionButton>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <MotionButton size="sm" variant="ghost">Small</MotionButton>
+              <MotionButton size="default">Default</MotionButton>
+              <MotionButton size="lg" variant="secondary">Large</MotionButton>
+            </div>
+          </CardContent>
+        </MotionCard>
+
+        <MotionCard animation="slideUp" delay="long">
           <CardHeader>
             <CardTitle>Badges</CardTitle>
             <CardDescription>
@@ -49,7 +82,7 @@ export default function ComponentsPage() {
               <Badge variant="outline">Outline</Badge>
             </div>
           </CardContent>
-        </Card>
+        </MotionCard>
 
         <Card>
           <CardHeader>
@@ -64,22 +97,58 @@ export default function ComponentsPage() {
             <Input type="password" placeholder="Password" />
           </CardContent>
         </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Card</CardTitle>
-            <CardDescription>
-              This card component demonstrates the structure with header, content areas.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>
-              Cards provide a flexible container for grouping related content and actions.
-              They can contain text, images, buttons, and other components.
-            </p>
-          </CardContent>
-        </Card>
       </div>
+
+      <MotionCard animation="fadeIn" hoverEffect="glow">
+        <CardHeader>
+          <CardTitle>Motion Animations</CardTitle>
+          <CardDescription>
+            Examples of different animation types available with Motion components.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="space-y-4">
+            <h4 className="text-sm font-medium">Motion Box Examples</h4>
+            <div className="grid gap-4 md:grid-cols-3">
+              <MotionBox 
+                animation="fadeInLeft" 
+                className="p-4 bg-muted rounded-lg text-center"
+              >
+                Fade In Left
+              </MotionBox>
+              <MotionBox 
+                animation="scaleIn" 
+                delay="short"
+                className="p-4 bg-muted rounded-lg text-center"
+              >
+                Scale In
+              </MotionBox>
+              <MotionBox 
+                animation="slideInFromTop" 
+                delay="medium"
+                className="p-4 bg-muted rounded-lg text-center"
+              >
+                Slide From Top
+              </MotionBox>
+            </div>
+          </div>
+          
+          <div className="space-y-4">
+            <h4 className="text-sm font-medium">Hover Effects</h4>
+            <div className="grid gap-4 md:grid-cols-3">
+              <MotionCard hoverEffect="lift" className="p-4 text-center cursor-pointer">
+                <p className="text-sm">Lift Effect</p>
+              </MotionCard>
+              <MotionCard hoverEffect="scale" className="p-4 text-center cursor-pointer">
+                <p className="text-sm">Scale Effect</p>
+              </MotionCard>
+              <MotionCard hoverEffect="glow" className="p-4 text-center cursor-pointer">
+                <p className="text-sm">Glow Effect</p>
+              </MotionCard>
+            </div>
+          </div>
+        </CardContent>
+      </MotionCard>
 
       <Card>
         <CardHeader>

@@ -1,6 +1,6 @@
 # Design System
 
-This project now includes a comprehensive design system built on top of Radix UI and CVA (Class Variance Authority) using shadcn/ui patterns.
+This project now includes a comprehensive design system built on top of Radix UI, CVA (Class Variance Authority), and Framer Motion using shadcn/ui patterns.
 
 ## Overview
 
@@ -9,6 +9,7 @@ The design system provides:
 - **Consistent styling** with CSS variables and Tailwind CSS
 - **Accessible components** built with Radix UI primitives  
 - **Type-safe variants** using CVA for component variants
+- **Smooth animations** powered by Framer Motion
 - **Developer-friendly API** with the `cn()` utility for className composition
 - **Backward compatibility** for existing components
 
@@ -23,6 +24,12 @@ The design system provides:
 - **Label** - Form labels with accessible associations
 - **Switch** - Toggle switch component
 - **Tooltip** - Contextual tooltips with proper positioning
+
+### Motion Components (`/components/ui/`)
+
+- **MotionBox** - Versatile animated container with pre-configured animations
+- **MotionButton** - Interactive buttons with hover, tap, and focus animations
+- **MotionCard** - Animated cards with entrance effects and hover interactions
 
 ### Legacy Components (Maintained for backward compatibility)
 
@@ -54,6 +61,24 @@ function MyComponent() {
 }
 ```
 
+### Using motion components:
+
+```tsx
+import { MotionBox, MotionButton, MotionCard } from "@/components/ui"
+
+function AnimatedComponent() {
+  return (
+    <MotionBox animation="fadeInUp" delay="short">
+      <MotionCard hoverEffect="lift" animation="scaleIn">
+        <CardContent>
+          <MotionButton motionType="all">Animated Button</MotionButton>
+        </CardContent>
+      </MotionCard>
+    </MotionBox>
+  )
+}
+```
+
 ### Using legacy components (for existing code):
 
 ```tsx
@@ -65,6 +90,43 @@ import { Tooltip } from "@/components/Tooltip/Tooltip"
   Click me
 </Button>
 ```
+
+## Animation System
+
+### Motion Variants
+
+The motion system provides pre-configured animation variants:
+
+- **Fade animations**: `fadeIn`, `fadeInUp`, `fadeInDown`, `fadeInLeft`, `fadeInRight`
+- **Scale animations**: `scaleIn`, `scaleUp`
+- **Slide animations**: `slideInFromTop`, `slideInFromBottom`, `slideInFromLeft`, `slideInFromRight`
+
+### Motion Components
+
+**MotionBox** - Versatile container with configurable animations:
+```tsx
+<MotionBox animation="fadeInUp" duration="normal" delay="short">
+  Content here
+</MotionBox>
+```
+
+**MotionButton** - Interactive button with motion effects:
+```tsx
+<MotionButton motionType="all" variant="primary">
+  Hover, tap, and focus me!
+</MotionButton>
+```
+
+**MotionCard** - Animated card with hover effects:
+```tsx
+<MotionCard hoverEffect="lift" animation="slideUp" delay="medium">
+  Card content
+</MotionCard>
+```
+
+### Performance
+
+All animations are GPU-accelerated and use Framer Motion's optimized animation engine. Components automatically handle entrance animations and interactive states.
 
 ## Utilities
 
