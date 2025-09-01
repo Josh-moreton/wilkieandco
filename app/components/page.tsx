@@ -4,7 +4,7 @@ export default function ComponentsPage() {
   return (
     <div className="container mx-auto p-8 space-y-8">
       <div className="space-y-2">
-        <h1 className="text-3xl font-bold">Design System Components</h1>
+        <h1 className="text-3xl font-bold font-serif">Design System Components</h1>
         <p className="text-muted-foreground">
           Built with Radix UI, CVA, and Tailwind CSS using shadcn/ui patterns.
         </p>
