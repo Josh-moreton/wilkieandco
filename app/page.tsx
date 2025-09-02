@@ -1,68 +1,49 @@
 import { Metadata } from "next"
-import { Button } from "components/Button/Button"
-
-import { LP_GRID_ITEMS } from "lp-items"
+import { ContactForm } from "@/components/ContactForm/ContactForm"
+import { Hero } from "@/components/Hero/Hero"
+import { ProjectSlider } from "@/components/ProjectSlider/ProjectSlider"
+import { Testimonials } from "@/components/Testimonials/Testimonials"
 
 export const metadata: Metadata = {
-  title: "Next.js Enterprise Boilerplate",
+  title: "Wilkie & Co - Professional Construction Services",
+  description: "Building Excellence, Creating Foundations for Tomorrow. Professional construction services with over two decades of experience in residential, commercial, and industrial projects.",
   twitter: {
     card: "summary_large_image",
   },
   openGraph: {
-    url: "https://next-enterprise.vercel.app/",
+    url: "https://wilkieandco.vercel.app/",
+    title: "Wilkie & Co - Professional Construction Services",
+    description: "Building Excellence, Creating Foundations for Tomorrow. Professional construction services with over two decades of experience.",
     images: [
       {
         width: 1200,
         height: 630,
-        url: "https://raw.githubusercontent.com/Blazity/next-enterprise/main/.github/assets/project-logo.png",
+        url: "/og-image.jpg",
       },
     ],
   },
 }
 
-export default function Web() {
+export default function HomePage() {
   return (
     <>
-      <section className="bg-white dark:bg-gray-900">
-        <div className="mx-auto grid max-w-(--breakpoint-xl) px-4 py-8 text-center lg:py-16">
-          <div className="mx-auto place-self-center">
-            <h1 className="mb-4 max-w-2xl text-4xl leading-none font-extrabold tracking-tight md:text-5xl xl:text-6xl dark:text-white font-serif">
-              Next.js Enterprise Boilerplate
-            </h1>
-            <p className="mb-6 max-w-2xl font-light text-gray-500 md:text-lg lg:mb-8 lg:text-xl dark:text-gray-400">
-              Jumpstart your enterprise project with our feature-packed, high-performance Next.js boilerplate!
-              Experience rapid UI development, AI-powered code reviews, and an extensive suite of tools for a smooth and
-              enjoyable development process.
+      <Hero />
+      <ProjectSlider />
+      <Testimonials />
+      
+      {/* Contact Section */}
+      <section className="bg-slate-50 dark:bg-slate-900 py-16 lg:py-24">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl lg:text-5xl font-bold font-serif text-slate-900 dark:text-white mb-4">
+              Get In Touch
+            </h2>
+            <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+              Ready to start your next construction project? Contact us today for a free consultation 
+              and let's discuss how we can bring your vision to life.
             </p>
-            <Button href="https://github.com/Blazity/next-enterprise" className="mr-3">
-              Get started
-            </Button>
-            <Button
-              href="https://vercel.com/new/git/external?repository-url=https://github.com/Blazity/next-enterprise"
-              intent="secondary"
-              className="mr-3"
-            >
-              Deploy Now
-            </Button>
-            <Button href="/contact" intent="secondary">
-              Contact Us
-            </Button>
           </div>
-        </div>
-      </section>
-      <section className="bg-white dark:bg-gray-900">
-        <div className="mx-auto max-w-(--breakpoint-xl) px-4 py-8 sm:py-16 lg:px-6">
-          <div className="justify-center space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0 lg:grid-cols-3">
-            {LP_GRID_ITEMS.map((singleItem) => (
-              <div key={singleItem.title} className="flex flex-col items-center justify-center text-center">
-                <div className="bg-primary-100 dark:bg-primary-900 mb-4 flex size-10 items-center justify-center rounded-full p-1.5 text-blue-700 lg:size-12">
-                  {singleItem.icon}
-                </div>
-                <h3 className="mb-2 text-xl font-bold dark:text-white font-serif">{singleItem.title}</h3>
-                <p className="text-gray-500 dark:text-gray-400">{singleItem.description}</p>
-              </div>
-            ))}
-          </div>
+          <ContactForm />
         </div>
       </section>
     </>
