@@ -90,6 +90,42 @@ export function ContactForm() {
     return true
   }
 
+  // Extracted helpers to keep submit handler simple
+  const mapServerErrors = (details: ApiErrorResponse["details"]) => {
+    const serverErrors: FormErrors = {}
+    if (!details) return serverErrors
+    if (details.name?._errors) serverErrors.name = details.name._errors
+    if (details.email?._errors) serverErrors.email = details.email._errors
+    if (details.phone?._errors) serverErrors.phone = details.phone._errors
+    if (details.message?._errors) serverErrors.message = details.message._errors
+    if (details._errors) serverErrors.root = details._errors
+    return serverErrors
+  }
+
+  const sendContactRequest = async (data: ContactFormData): Promise<ApiSuccessResponse> => {
+    const response = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+    const result = (await response.json()) as ApiErrorResponse | ApiSuccessResponse
+    if (!response.ok) {
+      const errorResult = result as ApiErrorResponse
+      const err = new Error(errorResult.message || 'Failed to send message') as Error & {
+        details?: ApiErrorResponse['details']
+      }
+      err.details = errorResult.details
+      throw err
+    }
+    return result as ApiSuccessResponse
+  }
+
+  const isErrorWithDetails = (
+    e: unknown
+  ): e is Error & { details?: ApiErrorResponse['details'] } => {
+    return typeof e === 'object' && e !== null && 'details' in (e as Record<string, unknown>)
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
@@ -101,36 +137,7 @@ export function ContactForm() {
     setSubmitStatus('idle')
     
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
-
-      const result = await response.json() as ApiErrorResponse | ApiSuccessResponse
-
-      if (!response.ok) {
-        const errorResult = result as ApiErrorResponse
-        if (errorResult.details) {
-          // Handle validation errors from server
-          const serverErrors: FormErrors = {}
-          const details = errorResult.details
-          
-          if (details.name?._errors) serverErrors.name = details.name._errors
-          if (details.email?._errors) serverErrors.email = details.email._errors
-          if (details.phone?._errors) serverErrors.phone = details.phone._errors
-          if (details.message?._errors) serverErrors.message = details.message._errors
-          if (details._errors) serverErrors.root = details._errors
-          
-          setErrors(serverErrors)
-        }
-        throw new Error(errorResult.message || 'Failed to send message')
-      }
-
-      // Success
-      const successResult = result as ApiSuccessResponse
+      const successResult = await sendContactRequest(formData)
       setSubmitStatus('success')
       setSubmitMessage(successResult.message || 'Your message has been sent successfully!')
       setFormData({ name: "", email: "", phone: "", message: "" })
@@ -139,6 +146,10 @@ export function ContactForm() {
     } catch (error) {
       console.error('Contact form error:', error)
       setSubmitStatus('error')
+      if (isErrorWithDetails(error)) {
+        const mapped = mapServerErrors(error.details)
+        if (Object.keys(mapped).length) setErrors(mapped)
+      }
       setSubmitMessage(error instanceof Error ? error.message : 'An unexpected error occurred. Please try again.')
     } finally {
       setIsSubmitting(false)
@@ -146,120 +157,100 @@ export function ContactForm() {
   }
 
   return (
-    <Card className="mx-auto max-w-2xl">
-      <CardHeader>
-        <CardTitle>Contact Us</CardTitle>
-        <CardDescription>
-          Get in touch with us. We'll get back to you as soon as possible.
-        </CardDescription>
+    <Card className="mx-auto max-w-2xl border-slate-200/20 bg-white/70 shadow-2xl backdrop-blur supports-[backdrop-filter]:backdrop-blur dark:border-slate-700/50 dark:bg-slate-900/60">
+      <CardHeader className="text-center">
+        <CardTitle className="text-2xl font-serif">Contact Us</CardTitle>
+        <CardDescription>Get in touch. We’ll get back to you as soon as possible.</CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Name Field */}
-          <div className="space-y-2">
-            <Label htmlFor="name">
-              Name <span className="text-red-500">*</span>
-            </Label>
-            <Input
-              id="name"
-              type="text"
-              value={formData.name}
-              onChange={handleInputChange('name')}
-              placeholder="Your full name"
-              className={errors.name ? "border-red-500" : ""}
-            />
-            {errors.name && (
-              <p className="text-sm text-red-500">{errors.name[0]}</p>
-            )}
+        <form onSubmit={handleSubmit} className="space-y-6" noValidate aria-live="polite" aria-busy={isSubmitting}>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div className="space-y-2 md:col-span-2">
+              <Label htmlFor="name">Name <span className="text-red-500">*</span></Label>
+              <Input
+                id="name"
+                type="text"
+                autoComplete="name"
+                value={formData.name}
+                onChange={handleInputChange('name')}
+                placeholder="Your full name"
+                className={"h-12 " + (errors.name ? "border-red-500" : "")}
+                aria-invalid={Boolean(errors.name)}
+              />
+              {errors.name && <p className="text-sm text-red-500">{errors.name[0]}</p>}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="email">Email <span className="text-sm text-muted-foreground">(required if no phone)</span></Label>
+              <Input
+                id="email"
+                type="email"
+                autoComplete="email"
+                value={formData.email}
+                onChange={handleInputChange('email')}
+                placeholder="your.email@example.com"
+                className={"h-12 " + (errors.email ? "border-red-500" : "")}
+                aria-invalid={Boolean(errors.email)}
+              />
+              {errors.email && <p className="text-sm text-red-500">{errors.email[0]}</p>}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="phone">Phone <span className="text-sm text-muted-foreground">(required if no email)</span></Label>
+              <Input
+                id="phone"
+                type="tel"
+                autoComplete="tel"
+                value={formData.phone}
+                onChange={handleInputChange('phone')}
+                placeholder="+1 (555) 123-4567"
+                className={"h-12 " + (errors.phone ? "border-red-500" : "")}
+                aria-invalid={Boolean(errors.phone)}
+              />
+              {errors.phone && <p className="text-sm text-red-500">{errors.phone[0]}</p>}
+            </div>
+
+            <div className="space-y-2 md:col-span-2">
+              <Label htmlFor="message">Message <span className="text-red-500">*</span></Label>
+              <Textarea
+                id="message"
+                value={formData.message}
+                onChange={handleInputChange('message')}
+                placeholder="Tell us how we can help you..."
+                rows={6}
+                className={"min-h-[140px] " + (errors.message ? "border-red-500" : "")}
+                aria-invalid={Boolean(errors.message)}
+              />
+              {errors.message && <p className="text-sm text-red-500">{errors.message[0]}</p>}
+              <p className="text-xs text-muted-foreground">{formData.message.length}/1000 characters</p>
+            </div>
           </div>
 
-          {/* Email Field */}
-          <div className="space-y-2">
-            <Label htmlFor="email">
-              Email <span className="text-sm text-muted-foreground">(required if no phone)</span>
-            </Label>
-            <Input
-              id="email"
-              type="email"
-              value={formData.email}
-              onChange={handleInputChange('email')}
-              placeholder="your.email@example.com"
-              className={errors.email ? "border-red-500" : ""}
-            />
-            {errors.email && (
-              <p className="text-sm text-red-500">{errors.email[0]}</p>
-            )}
-          </div>
-
-          {/* Phone Field */}
-          <div className="space-y-2">
-            <Label htmlFor="phone">
-              Phone <span className="text-sm text-muted-foreground">(required if no email)</span>
-            </Label>
-            <Input
-              id="phone"
-              type="tel"
-              value={formData.phone}
-              onChange={handleInputChange('phone')}
-              placeholder="+1 (555) 123-4567"
-              className={errors.phone ? "border-red-500" : ""}
-            />
-            {errors.phone && (
-              <p className="text-sm text-red-500">{errors.phone[0]}</p>
-            )}
-          </div>
-
-          {/* Message Field */}
-          <div className="space-y-2">
-            <Label htmlFor="message">
-              Message <span className="text-red-500">*</span>
-            </Label>
-            <Textarea
-              id="message"
-              value={formData.message}
-              onChange={handleInputChange('message')}
-              placeholder="Tell us how we can help you..."
-              rows={4}
-              className={errors.message ? "border-red-500" : ""}
-            />
-            {errors.message && (
-              <p className="text-sm text-red-500">{errors.message[0]}</p>
-            )}
-            <p className="text-sm text-muted-foreground">
-              {formData.message.length}/1000 characters
-            </p>
-          </div>
-
-          {/* Root validation errors */}
           {errors.root && (
-            <div className="text-sm text-red-500">
-              {errors.root.map((error, index) => (
-                <p key={index}>{error}</p>
+            <div className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-800 dark:border-red-900/40 dark:bg-red-950/40 dark:text-red-200">
+              {errors.root.map((error) => (
+                <p key={error}>{error}</p>
               ))}
             </div>
           )}
 
-          {/* Submit Status Messages */}
           {submitStatus === 'success' && (
-            <div className="rounded-md bg-green-50 p-4 text-green-800 border border-green-200">
+            <div className="rounded-md border border-green-200 bg-green-50 p-3 text-green-800 dark:border-green-900/40 dark:bg-green-950/40 dark:text-green-200">
               {submitMessage}
             </div>
           )}
 
           {submitStatus === 'error' && (
-            <div className="rounded-md bg-red-50 p-4 text-red-800 border border-red-200">
+            <div className="rounded-md border border-red-200 bg-red-50 p-3 text-red-800 dark:border-red-900/40 dark:bg-red-950/40 dark:text-red-200">
               {submitMessage}
             </div>
           )}
 
-          {/* Submit Button */}
-          <Button 
-            type="submit" 
-            disabled={isSubmitting}
-            className="w-full"
-          >
+          <Button type="submit" disabled={isSubmitting} className="w-full h-12 bg-yellow-500 text-slate-900 hover:bg-yellow-600 disabled:opacity-60">
             {isSubmitting ? "Sending..." : "Send Message"}
           </Button>
+
+          <p className="text-center text-xs text-muted-foreground">Prefer email? Write to us at info@wilkieandco.com</p>
         </form>
       </CardContent>
     </Card>
