@@ -100,7 +100,7 @@ export function FullPageScroll({ children, className = "" }: Readonly<FullPageSc
           key={keyVal}
           ref={setRefAt(idx)}
           data-index={idx}
-          className="min-h-[100dvh] w-full snap-start flex items-center [&>*]:min-h-[100dvh] [&>*]:h-full [&>*]:w-full"
+          className="min-h-[100dvh] w-screen snap-start flex items-center [&>*]:min-h-[100dvh] [&>*]:h-full [&>*]:w-screen"
           variants={variants}
           initial="inactive"
           animate={idx === activeIndex ? "active" : "inactive"}

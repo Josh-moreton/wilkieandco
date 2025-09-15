@@ -72,7 +72,7 @@ export function ProjectSlider() {
   }
 
   return (
-    <section className="bg-slate-50 dark:bg-slate-900 min-h-[100dvh] flex items-center py-16 lg:py-24 text-slate-900 dark:text-white">
+  <section className="bg-slate-50 dark:bg-slate-900 min-h-[100dvh] w-screen flex items-center py-16 lg:py-24 text-slate-900 dark:text-white">
       <div className="mx-auto w-full max-w-[min(1200px,90vw)] px-6">
         {/* Section Header */}
         <motion.div
@@ -91,7 +91,7 @@ export function ProjectSlider() {
         </motion.div>
 
         {/* Main Slider */}
-        <div className="relative">
+        <div className="relative min-h-[60vh]">
           <div className="overflow-hidden rounded-2xl">
             <AnimatePresence mode="wait">
               <motion.div
@@ -103,9 +103,9 @@ export function ProjectSlider() {
               >
                 <Card className="border-0 shadow-2xl">
                   <CardContent className="p-0">
-                    <div className="grid lg:grid-cols-2 gap-0">
+                    <div className="grid lg:grid-cols-2 gap-0 min-h-[50vh]">
                       {/* Project Image */}
-                      <div className="relative h-72 lg:h-[28rem] bg-slate-200 dark:bg-slate-700 overflow-hidden">
+                      <div className="relative h-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-br from-slate-500 to-slate-700 flex items-center justify-center">
                           <div className="text-center text-white">
                             <div className="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-lg flex items-center justify-center">
