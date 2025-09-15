@@ -157,16 +157,16 @@ export function ContactForm() {
   }
 
   return (
-    <Card className="mx-auto max-w-2xl border-slate-200/20 bg-white/70 shadow-2xl backdrop-blur supports-[backdrop-filter]:backdrop-blur dark:border-slate-700/50 dark:bg-slate-900/60">
+    <Card className="mx-auto max-w-2xl border-slate-200/30 bg-slate-50/90 shadow-xl backdrop-blur supports-[backdrop-filter]:backdrop-blur dark:border-slate-700/50 dark:bg-slate-800/80 text-slate-900 dark:text-slate-100">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-serif">Contact Us</CardTitle>
-        <CardDescription>Get in touch. We’ll get back to you as soon as possible.</CardDescription>
+        <CardDescription className="text-slate-600 dark:text-slate-300">Get in touch. We’ll get back to you as soon as possible.</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6" noValidate aria-live="polite" aria-busy={isSubmitting}>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="name">Name <span className="text-red-500">*</span></Label>
+              <Label htmlFor="name" className="text-slate-800 dark:text-slate-200">Name <span className="text-red-500">*</span></Label>
               <Input
                 id="name"
                 type="text"
@@ -174,14 +174,14 @@ export function ContactForm() {
                 value={formData.name}
                 onChange={handleInputChange('name')}
                 placeholder="Your full name"
-                className={"h-12 " + (errors.name ? "border-red-500" : "")}
+                className={"h-12 bg-white/70 dark:bg-slate-900/40 text-slate-900 dark:text-slate-100 " + (errors.name ? "border-red-500" : "")}
                 aria-invalid={Boolean(errors.name)}
               />
               {errors.name && <p className="text-sm text-red-500">{errors.name[0]}</p>}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email <span className="text-sm text-muted-foreground">(required if no phone)</span></Label>
+              <Label htmlFor="email" className="text-slate-800 dark:text-slate-200">Email <span className="text-sm text-muted-foreground">(required if no phone)</span></Label>
               <Input
                 id="email"
                 type="email"
@@ -189,14 +189,14 @@ export function ContactForm() {
                 value={formData.email}
                 onChange={handleInputChange('email')}
                 placeholder="your.email@example.com"
-                className={"h-12 " + (errors.email ? "border-red-500" : "")}
+                className={"h-12 bg-white/70 dark:bg-slate-900/40 text-slate-900 dark:text-slate-100 " + (errors.email ? "border-red-500" : "")}
                 aria-invalid={Boolean(errors.email)}
               />
               {errors.email && <p className="text-sm text-red-500">{errors.email[0]}</p>}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="phone">Phone <span className="text-sm text-muted-foreground">(required if no email)</span></Label>
+              <Label htmlFor="phone" className="text-slate-800 dark:text-slate-200">Phone <span className="text-sm text-muted-foreground">(required if no email)</span></Label>
               <Input
                 id="phone"
                 type="tel"
@@ -204,25 +204,25 @@ export function ContactForm() {
                 value={formData.phone}
                 onChange={handleInputChange('phone')}
                 placeholder="+1 (555) 123-4567"
-                className={"h-12 " + (errors.phone ? "border-red-500" : "")}
+                className={"h-12 bg-white/70 dark:bg-slate-900/40 text-slate-900 dark:text-slate-100 " + (errors.phone ? "border-red-500" : "")}
                 aria-invalid={Boolean(errors.phone)}
               />
               {errors.phone && <p className="text-sm text-red-500">{errors.phone[0]}</p>}
             </div>
 
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="message">Message <span className="text-red-500">*</span></Label>
+              <Label htmlFor="message" className="text-slate-800 dark:text-slate-200">Message <span className="text-red-500">*</span></Label>
               <Textarea
                 id="message"
                 value={formData.message}
                 onChange={handleInputChange('message')}
                 placeholder="Tell us how we can help you..."
                 rows={6}
-                className={"min-h-[140px] " + (errors.message ? "border-red-500" : "")}
+                className={"min-h-[140px] bg-white/70 dark:bg-slate-900/40 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 dark:placeholder:text-slate-400 " + (errors.message ? "border-red-500" : "")}
                 aria-invalid={Boolean(errors.message)}
               />
               {errors.message && <p className="text-sm text-red-500">{errors.message[0]}</p>}
-              <p className="text-xs text-muted-foreground">{formData.message.length}/1000 characters</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">{formData.message.length}/1000 characters</p>
             </div>
           </div>
 
@@ -250,7 +250,7 @@ export function ContactForm() {
             {isSubmitting ? "Sending..." : "Send Message"}
           </Button>
 
-          <p className="text-center text-xs text-muted-foreground">Prefer email? Write to us at info@wilkieandco.com</p>
+          <p className="text-center text-xs text-slate-600 dark:text-slate-300">Prefer email? Write to us at info@wilkieandco.com</p>
         </form>
       </CardContent>
     </Card>
