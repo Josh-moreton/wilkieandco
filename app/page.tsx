@@ -1,5 +1,6 @@
 import { Metadata } from "next"
 import { ContactForm } from "@/components/ContactForm/ContactForm"
+import { FullPageScroll } from "@/components/FullPageScroll/FullPageScroll"
 import { Hero } from "@/components/Hero/Hero"
 import { ProjectSlider } from "@/components/ProjectSlider/ProjectSlider"
 import { Testimonials } from "@/components/Testimonials/Testimonials"
@@ -26,14 +27,16 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <>
-      <Hero />
-      <ProjectSlider />
-      <Testimonials />
-      
-      {/* Contact Section */}
-      <section className="bg-slate-50 dark:bg-slate-900 py-16 lg:py-24">
-        <div className="max-w-4xl mx-auto px-4">
+    <FullPageScroll>
+      <Hero key="hero" />
+      <div key="projects" className="w-full bg-slate-50 dark:bg-slate-900">
+        <ProjectSlider />
+      </div>
+      <div key="testimonials" className="w-full bg-white dark:bg-slate-800">
+        <Testimonials />
+      </div>
+      <div key="contact" className="w-full bg-slate-50 dark:bg-slate-900">
+        <div className="max-w-4xl mx-auto px-4 py-16 lg:py-24">
           <div className="text-center mb-12">
             <h2 className="text-4xl lg:text-5xl font-bold font-serif text-slate-900 dark:text-white mb-4">
               Get In Touch
@@ -45,7 +48,7 @@ export default function HomePage() {
           </div>
           <ContactForm />
         </div>
-      </section>
-    </>
+      </div>
+    </FullPageScroll>
   )
 }
