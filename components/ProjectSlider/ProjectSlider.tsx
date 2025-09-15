@@ -72,7 +72,7 @@ export function ProjectSlider() {
   }
 
   return (
-    <section className="bg-slate-50 dark:bg-slate-900 py-16 lg:py-24">
+  <section className="bg-slate-50 dark:bg-slate-900 min-h-[100dvh] flex items-center py-16 lg:py-24 text-slate-900 dark:text-white">
       <div className="max-w-7xl mx-auto px-4">
         {/* Section Header */}
         <motion.div
@@ -82,7 +82,7 @@ export function ProjectSlider() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl lg:text-5xl font-bold font-serif text-slate-900 dark:text-white mb-4">
+          <h2 className="text-4xl lg:text-5xl font-bold font-serif mb-4">
             Featured Projects
           </h2>
           <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
@@ -125,7 +125,7 @@ export function ProjectSlider() {
                           {projects[currentIndex]?.category}
                         </Badge>
                         
-                        <h3 className="text-3xl lg:text-4xl font-bold font-serif text-slate-900 dark:text-white mb-4">
+                        <h3 className="text-3xl lg:text-4xl font-bold font-serif mb-4">
                           {projects[currentIndex]?.title}
                         </h3>
                         
@@ -138,8 +138,8 @@ export function ProjectSlider() {
                             Key Features
                           </h4>
                           <div className="flex flex-wrap gap-2">
-                            {projects[currentIndex]?.features.map((feature, index) => (
-                              <Badge key={index} variant="outline" className="text-xs">
+                            {projects[currentIndex]?.features.map((feature) => (
+                              <Badge key={feature} variant="outline" className="text-xs">
                                 {feature}
                               </Badge>
                             ))}
@@ -184,16 +184,16 @@ export function ProjectSlider() {
 
         {/* Dots Navigation */}
         <div className="flex justify-center space-x-2 mt-8">
-          {projects.map((_, index) => (
+          {projects.map((proj) => (
             <button
-              key={index}
-              onClick={() => goToProject(index)}
+              key={proj.id}
+              onClick={() => goToProject(projects.findIndex(p => p.id === proj.id))}
               className={`w-3 h-3 rounded-full transition-all ${
-                index === currentIndex
+                projects.findIndex(p => p.id === proj.id) === currentIndex
                   ? "bg-slate-900 dark:bg-white scale-125"
                   : "bg-slate-300 dark:bg-slate-600 hover:bg-slate-400 dark:hover:bg-slate-500"
               }`}
-              aria-label={`Go to project ${index + 1}`}
+              aria-label={`Go to project ${proj.id}`}
             />
           ))}
         </div>
