@@ -83,15 +83,15 @@ const StarRating = ({ rating }: { rating: number }) => {
 
 export function Testimonials() {
   return (
-  <section className="bg-white dark:bg-slate-800 min-h-[100dvh] w-screen flex items-center py-16 lg:py-24">
-      <div className="mx-auto w-full max-w-[min(1200px,90vw)] px-6">
+    <section className="bg-white dark:bg-slate-800 min-h-[100dvh] w-screen flex items-center py-10 sm:py-16 lg:py-24">
+      <div className="mx-auto w-full max-w-[min(1200px,92vw)] px-5 sm:px-6">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-16"
         >
           <h2 className="text-4xl lg:text-5xl font-bold font-serif text-slate-900 dark:text-white mb-4">
             What Our Clients Say

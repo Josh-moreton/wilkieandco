@@ -72,8 +72,8 @@ export function ProjectSlider() {
   }
 
   return (
-  <section className="bg-slate-50 dark:bg-slate-900 min-h-[100dvh] w-screen flex items-center py-16 lg:py-24 text-slate-900 dark:text-white">
-      <div className="mx-auto w-full max-w-[min(1200px,90vw)] px-6">
+    <section className="bg-slate-50 dark:bg-slate-900 min-h-[100dvh] w-screen flex items-center py-10 sm:py-16 lg:py-24 text-slate-900 dark:text-white">
+      <div className="mx-auto w-full max-w-[min(1200px,92vw)] px-5 sm:px-6">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -103,9 +103,9 @@ export function ProjectSlider() {
               >
                 <Card className="border-0 shadow-2xl">
                   <CardContent className="p-0">
-                    <div className="grid lg:grid-cols-2 gap-0 min-h-[50vh]">
+                    <div className="grid gap-0 min-h-[50vh] lg:grid-cols-2">
                       {/* Project Image */}
-                      <div className="relative h-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+                      <div className="relative h-56 sm:h-72 lg:h-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-br from-slate-500 to-slate-700 flex items-center justify-center">
                           <div className="text-center text-white">
                             <div className="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-lg flex items-center justify-center">
@@ -120,7 +120,7 @@ export function ProjectSlider() {
                       </div>
 
                       {/* Project Details */}
-                      <div className="p-8 lg:p-12 flex flex-col justify-center">
+                      <div className="p-6 sm:p-8 lg:p-12 flex flex-col justify-center">
                         <Badge variant="secondary" className="w-fit mb-4">
                           {projects[currentIndex]?.category}
                         </Badge>
@@ -183,7 +183,7 @@ export function ProjectSlider() {
         </div>
 
         {/* Dots Navigation */}
-        <div className="flex justify-center space-x-2 mt-8">
+  <div className="flex justify-center space-x-2 mt-6 sm:mt-8">
           {projects.map((proj) => (
             <button
               key={proj.id}

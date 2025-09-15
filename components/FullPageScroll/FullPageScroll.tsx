@@ -112,7 +112,7 @@ export function FullPageScroll({ children, className = "" }: Readonly<FullPageSc
       })}
 
       {/* Dot Navigation */}
-      <div className="fixed right-6 top-1/2 -translate-y-1/2 z-50">
+      <div className="fixed right-3 md:right-6 top-1/2 -translate-y-1/2 z-50">
         <ul className="flex flex-col gap-3">
           {items.map((child, i) => {
             const keyVal = (React.isValidElement(child) && child.key != null ? String(child.key) : `s-${i}`)
@@ -123,7 +123,7 @@ export function FullPageScroll({ children, className = "" }: Readonly<FullPageSc
                 aria-current={i === activeIndex ? "true" : undefined}
                 onClick={() => scrollToIndex(i)}
                 className={
-                  "h-3 w-3 rounded-full transition-all " +
+                  "h-2 w-2 md:h-3 md:w-3 rounded-full transition-all " +
                   (i === activeIndex
                     ? "bg-slate-900 dark:bg-white scale-110"
                     : "bg-slate-300 dark:bg-slate-600 hover:bg-slate-400 dark:hover:bg-slate-500")

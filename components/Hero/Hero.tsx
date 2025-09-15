@@ -13,7 +13,7 @@ export function Hero() {
       </div>
       
       {/* Content */}
-  <div className="relative mx-auto w-full max-w-[min(1200px,90vw)] px-6 py-12">
+  <div className="relative mx-auto w-full max-w-[min(1200px,92vw)] px-5 py-10 sm:px-6 sm:py-12">
         <div className="text-center space-y-8">
           {/* Animated Company Name */}
           <motion.div
@@ -21,7 +21,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold font-serif tracking-tight">
+            <h1 className="text-[2.25rem] sm:text-6xl lg:text-7xl xl:text-8xl font-bold font-serif tracking-tight leading-tight">
               <motion.span
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -48,10 +48,10 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="max-w-3xl mx-auto"
           >
-            <p className="text-xl sm:text-2xl lg:text-3xl text-slate-300 font-light leading-relaxed">
+            <p className="text-base sm:text-2xl lg:text-3xl text-slate-300 font-light leading-relaxed">
               Building Excellence, Creating Foundations for Tomorrow
             </p>
-            <p className="mt-4 text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto">
+            <p className="mt-3 text-sm sm:text-xl text-slate-400 max-w-2xl mx-auto">
               Professional construction services with over two decades of experience. 
               From residential to commercial projects, we deliver quality that stands the test of time.
             </p>
@@ -62,18 +62,18 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center"
           >
             <Button 
               size="lg"
-              className="bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-semibold px-8 py-4 text-lg"
+              className="bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-semibold px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg"
             >
               View Our Projects
             </Button>
             <Button 
               variant="outline"
               size="lg"
-              className="border-slate-300 text-slate-300 hover:bg-slate-800 hover:text-white px-8 py-4 text-lg"
+              className="border-slate-300 text-slate-300 hover:bg-slate-800 hover:text-white px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg"
               asChild
             >
               <a href="/contact">Get Quote</a>
