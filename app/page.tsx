@@ -33,8 +33,8 @@ export default function HomePage() {
       <div key="testimonials" className="w-full bg-white dark:bg-slate-800">
         <Testimonials />
       </div>
-      <div key="contact" className="w-full bg-slate-50 dark:bg-slate-900">
-        <div className="max-w-4xl mx-auto px-4 py-16 lg:py-24">
+      <div key="contact" className="w-full bg-slate-50 dark:bg-slate-900 min-h-[100dvh] flex items-center">
+        <div className="max-w-4xl mx-auto px-6 py-16 lg:py-24 w-full">
           <div className="text-center mb-12">
             <h2 className="text-4xl lg:text-5xl font-bold font-serif text-slate-900 dark:text-white mb-4">
               Get In Touch

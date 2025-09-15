@@ -5,7 +5,7 @@ import { Button } from "@/components/ui"
 
 export function Hero() {
   return (
-    <section className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden">
+    <section className="relative min-h-[100dvh] flex items-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden">
       {/* Background Construction Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-yellow-500 rounded-full filter blur-3xl" />
@@ -13,7 +13,7 @@ export function Hero() {
       </div>
       
       {/* Content */}
-      <div className="relative max-w-7xl mx-auto px-4 py-24 sm:py-32 lg:py-40">
+  <div className="relative mx-auto w-full max-w-[min(1200px,90vw)] px-6 py-12">
         <div className="text-center space-y-8">
           {/* Animated Company Name */}
           <motion.div
