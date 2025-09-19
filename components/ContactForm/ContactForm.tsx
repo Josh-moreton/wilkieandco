@@ -203,7 +203,7 @@ export function ContactForm() {
                 autoComplete="tel"
                 value={formData.phone}
                 onChange={handleInputChange('phone')}
-                placeholder="+1 (555) 123-4567"
+                placeholder="07123 456 789"
                 className={"h-12 bg-white/70 dark:bg-slate-900/40 text-slate-900 dark:text-slate-100 " + (errors.phone ? "border-red-500" : "")}
                 aria-invalid={Boolean(errors.phone)}
               />
