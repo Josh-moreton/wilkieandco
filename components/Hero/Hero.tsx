@@ -5,13 +5,7 @@ import { Button } from "@/components/ui"
 
 export function Hero() {
   return (
-  <section className="relative min-h-[100dvh] w-screen flex items-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden">
-      {/* Background Construction Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-yellow-500 rounded-full filter blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500 rounded-full filter blur-3xl" />
-      </div>
-      
+  <section className="relative min-h-[100dvh] w-screen flex items-center bg-transparent text-white overflow-hidden">
       {/* Content */}
   <div className="relative mx-auto w-full max-w-[min(1200px,92vw)] px-5 py-10 sm:px-6 sm:py-12">
         <div className="text-center space-y-8">
