@@ -43,11 +43,11 @@ export function Hero() {
             className="max-w-3xl mx-auto"
           >
             <p className="text-base sm:text-2xl lg:text-3xl text-slate-300 font-light leading-relaxed">
-              Building Excellence, Creating Foundations for Tomorrow
+              Crafting Excellence, Creating Beautiful Interiors
             </p>
             <p className="mt-3 text-sm sm:text-xl text-slate-400 max-w-2xl mx-auto">
-              Professional construction services with over two decades of experience. 
-              From residential to commercial projects, we deliver quality that stands the test of time.
+              Expert joinery services based in Edinburgh, specializing in bespoke kitchens, built-in furniture, and home renovations. 
+              From small repairs to complete interior transformations, we bring craftsmanship and care to every project.
             </p>
           </motion.div>
           
@@ -62,7 +62,7 @@ export function Hero() {
               size="lg"
               className="bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-semibold px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg"
             >
-              View Our Projects
+              View Our Work
             </Button>
             <Button 
               variant="outline"
@@ -70,7 +70,7 @@ export function Hero() {
               className="border-slate-300 text-slate-300 hover:bg-slate-800 hover:text-white px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg"
               asChild
             >
-              <a href="#contact">Get Quote</a>
+              <a href="#contact">Get Free Quote</a>
             </Button>
           </motion.div>
         </div>

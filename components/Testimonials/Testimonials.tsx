@@ -17,48 +17,48 @@ const testimonials: Testimonial[] = [
     id: 1,
     name: "Sarah Mitchell",
     title: "Homeowner",
-    company: "Residential Client",
-    quote: "Wilkie & Co exceeded our expectations in every way. From the initial consultation to the final walkthrough, their attention to detail and commitment to quality was outstanding. Our dream home became a reality thanks to their expertise.",
+    company: "Morningside, Edinburgh",
+    quote: "Wilkie & Co completely transformed our kitchen beyond our wildest dreams. Their craftsmanship is exceptional and they understood exactly what we needed for our family. The attention to detail in every joint and finish is incredible.",
     rating: 5
   },
   {
     id: 2,
-    name: "David Chen",
-    title: "Property Manager",
-    company: "Metro Commercial Properties",
-    quote: "We've worked with many contractors over the years, but Wilkie & Co stands out for their professionalism and reliability. They completed our office renovation ahead of schedule and under budget, with exceptional quality throughout.",
+    name: "James Henderson",
+    title: "Homeowner", 
+    company: "Stockbridge, Edinburgh",
+    quote: "We couldn't be happier with our Victorian house renovation. They respected the period features while creating beautiful modern storage solutions. The built-in wardrobes are a work of art and fit the space perfectly.",
     rating: 5
   },
   {
     id: 3,
-    name: "Lisa Rodriguez",
-    title: "Operations Director",
-    company: "TechFlow Industries",
-    quote: "The warehouse facility Wilkie & Co built for us has been instrumental in our company's growth. Their understanding of industrial construction requirements and ability to deliver on time was impressive.",
+    name: "Emma Thompson",
+    title: "Homeowner",
+    company: "Bruntsfield, Edinburgh",
+    quote: "Our garden room has become the heart of our home. The quality of workmanship is outstanding and the team was wonderful to work with. They kept us informed every step of the way and finished exactly on time.",
     rating: 5
   },
   {
     id: 4,
-    name: "Michael Thompson",
-    title: "Investment Banker",
-    company: "Thompson & Associates",
-    quote: "When we needed to restore our heritage building, Wilkie & Co was the obvious choice. Their expertise in historical restoration while incorporating modern systems was exactly what we needed.",
+    name: "Robert MacLeod",
+    title: "Homeowner",
+    company: "Leith, Edinburgh", 
+    quote: "The loft conversion has given us so much extra space and it's beautifully finished. Every detail was considered, from the dormer windows to the fitted storage. Couldn't recommend them highly enough.",
     rating: 5
   },
   {
     id: 5,
-    name: "Amanda Foster",
-    title: "Real Estate Developer",
-    company: "Foster Development Group",
-    quote: "Wilkie & Co has been our go-to construction partner for multiple luxury residential projects. Their craftsmanship and attention to detail consistently deliver results that exceed our clients' expectations.",
+    name: "Claire Anderson",
+    title: "Homeowner",
+    company: "New Town, Edinburgh",
+    quote: "My home office is now my favorite room in the house! The built-in desk and bookcases are perfectly proportioned and the craftsmanship is superb. They turned an unused space into something truly special.",
     rating: 5
   },
   {
     id: 6,
-    name: "James Wilson",
-    title: "Facility Manager",
-    company: "Wilson Manufacturing",
-    quote: "The industrial complex Wilkie & Co constructed for us has performed flawlessly for over three years. Their expertise in industrial construction and commitment to safety made the entire process smooth and worry-free.",
+    name: "Mark Davidson",
+    title: "Homeowner",
+    company: "Portobello, Edinburgh",
+    quote: "From the initial consultation to the final touch-ups, Wilkie & Co made our home renovation stress-free. Their small team approach meant we got to know everyone and they really cared about getting every detail right.",
     rating: 5
   }
 ]
@@ -97,7 +97,7 @@ export function Testimonials() {
             What Our Clients Say
           </h2>
           <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-            Don't just take our word for it. Hear from the clients who have trusted us with their most important construction projects.
+            Don't just take our word for it. Hear from Edinburgh homeowners who have trusted us with their joinery and renovation projects.
           </p>
         </motion.div>
 
@@ -158,11 +158,11 @@ export function Testimonials() {
         >
           <div className="bg-slate-800/80 backdrop-blur rounded-2xl p-8 lg:p-12">
             <h3 className="text-2xl lg:text-3xl font-bold font-serif text-white mb-4">
-              Ready to Start Your Project?
+              Ready to Transform Your Home?
             </h3>
             <p className="text-lg text-slate-300 mb-6 max-w-2xl mx-auto">
-              Join our satisfied clients and experience the Wilkie & Co difference. 
-              Contact us today for a consultation on your next construction project.
+              Join our satisfied Edinburgh homeowners and experience the Wilkie & Co difference. 
+              Contact us today for a free consultation on your joinery or renovation project.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.a

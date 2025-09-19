@@ -16,43 +16,43 @@ interface Project {
 const projects: Project[] = [
   {
     id: 1,
-    title: "Modern Family Home",
-    category: "Residential",
-    description: "A contemporary 4-bedroom home featuring open-plan living, sustainable materials, and energy-efficient design.",
+    title: "Bespoke Kitchen Installation",
+    category: "Kitchen Joinery",
+    description: "Complete kitchen transformation in Morningside featuring handcrafted oak cabinets, granite worktops, and integrated appliances tailored to the family's lifestyle.",
     image: "/api/placeholder/600/400",
-    features: ["Energy Efficient", "Open Plan", "Sustainable Materials"]
+    features: ["Handcrafted Oak", "Granite Worktops", "Bespoke Design"]
   },
   {
     id: 2,
-    title: "Downtown Office Complex",
-    category: "Commercial",
-    description: "15-story office building with modern amenities, green rooftop, and state-of-the-art HVAC systems.",
+    title: "Victorian Home Built-ins",
+    category: "Fitted Furniture",
+    description: "Custom built-in wardrobes and shelving for a Victorian terrace in Stockbridge, designed to maximize space while respecting the home's period character.",
     image: "/api/placeholder/600/400",
-    features: ["LEED Certified", "Smart Building", "Green Roof"]
+    features: ["Period Sensitive", "Space Maximizing", "Custom Wardrobes"]
   },
   {
     id: 3,
-    title: "Heritage Restoration",
-    category: "Restoration",
-    description: "Careful restoration of a 1920s heritage building, preserving historical character while modernizing infrastructure.",
+    title: "Garden Room Extension",
+    category: "Home Extension",
+    description: "Beautiful garden room addition in Bruntsfield with oak beams, bi-fold doors, and underfloor heating - perfect for year-round enjoyment.",
     image: "/api/placeholder/600/400",
-    features: ["Heritage Preservation", "Modern Systems", "Historical Accuracy"]
+    features: ["Oak Beams", "Bi-fold Doors", "Underfloor Heating"]
   },
   {
     id: 4,
-    title: "Industrial Warehouse",
-    category: "Industrial",
-    description: "50,000 sq ft warehouse facility with automated systems, high-bay lighting, and flexible space design.",
+    title: "Loft Conversion",
+    category: "Home Renovation",
+    description: "Complete loft conversion in Leith creating a master bedroom suite with fitted wardrobes, dormer windows, and a modern en-suite bathroom.",
     image: "/api/placeholder/600/400",
-    features: ["Automated Systems", "High-Bay Design", "Flexible Space"]
+    features: ["Dormer Windows", "En-suite Bathroom", "Fitted Wardrobes"]
   },
   {
     id: 5,
-    title: "Luxury Condominium",
-    category: "Residential",
-    description: "High-end 20-unit condominium building with premium finishes, concierge services, and panoramic city views.",
+    title: "Home Office Makeover",
+    category: "Interior Joinery",
+    description: "Transformation of an unused bedroom in New Town into a stunning home office with built-in desk, bookcases, and storage solutions.",
     image: "/api/placeholder/600/400",
-    features: ["Luxury Finishes", "Concierge", "City Views"]
+    features: ["Built-in Desk", "Custom Bookcases", "Storage Solutions"]
   }
 ]
 
@@ -83,10 +83,10 @@ export function ProjectSlider() {
           className="text-center mb-12"
         >
           <h2 className="text-4xl lg:text-5xl font-bold font-serif mb-4 text-white">
-            Featured Projects
+            Our Recent Work
           </h2>
           <p className="text-xl text-slate-300 max-w-3xl mx-auto hidden md:block">
-            Explore our portfolio of completed projects, showcasing our expertise across residential, commercial, and industrial construction.
+            Explore our portfolio of completed joinery projects across Edinburgh, showcasing our expertise in bespoke kitchens, built-in furniture, and home renovations.
           </p>
         </motion.div>
 
@@ -150,7 +150,7 @@ export function ProjectSlider() {
                           className="w-fit"
                           size="lg"
                         >
-                          View Project Details
+                          View Work Details
                         </Button>
                       </div>
                     </div>
