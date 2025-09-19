@@ -118,7 +118,7 @@ export function FullPageScroll({ children, className = "" }: Readonly<FullPageSc
     <div
       ref={containerRef}
       className={
-        "relative h-[100svh] w-full overflow-y-auto overscroll-y-contain scroll-smooth bg-transparent md:snap-y md:snap-mandatory " +
+        "relative h-[100svh] w-full overflow-y-auto overscroll-y-contain snap-y snap-mandatory scroll-smooth bg-transparent " +
         className
       }
       aria-label="Full page sections"
@@ -130,7 +130,7 @@ export function FullPageScroll({ children, className = "" }: Readonly<FullPageSc
             key={keyVal}
             ref={setRefAt(idx)}
             data-index={idx}
-            className="min-h-0 w-screen md:flex md:min-h-[100svh] md:snap-start md:items-center [&>*]:h-auto [&>*]:min-h-0 [&>*]:w-screen md:[&>*]:h-full md:[&>*]:min-h-[100svh]"
+            className="min-h-0 w-screen snap-start md:flex md:min-h-[100svh] md:items-center [&>*]:h-auto [&>*]:min-h-0 [&>*]:w-screen md:[&>*]:h-full md:[&>*]:min-h-[100svh]"
             variants={variants}
             initial="inactive"
             animate={idx === activeIndex ? "active" : "inactive"}
