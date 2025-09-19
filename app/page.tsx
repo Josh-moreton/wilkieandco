@@ -36,7 +36,7 @@ export default function HomePage() {
   <div key="contact" id="contact" className="w-screen bg-transparent min-h-[100dvh] flex items-center">
         <div className="max-w-4xl mx-auto px-4 py-8 md:py-16 lg:py-24 w-full">
           <div className="text-center mb-6 md:mb-12">
-            <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold font-serif text-white mb-2 md:mb-4">
+            <h2 className="hidden md:block text-2xl md:text-4xl lg:text-5xl font-bold font-serif text-white mb-2 md:mb-4">
               Let's Discuss Your Project
             </h2>
             <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto hidden md:block">
