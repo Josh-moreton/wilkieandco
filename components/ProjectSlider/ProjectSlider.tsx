@@ -85,7 +85,7 @@ export function ProjectSlider() {
           <h2 className="text-4xl lg:text-5xl font-bold font-serif mb-4 text-white">
             Featured Projects
           </h2>
-          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto hidden md:block">
             Explore our portfolio of completed projects, showcasing our expertise across residential, commercial, and industrial construction.
           </p>
         </motion.div>
