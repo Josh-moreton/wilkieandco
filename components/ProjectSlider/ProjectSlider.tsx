@@ -83,10 +83,10 @@ export function ProjectSlider() {
           className="text-center mb-12"
         >
           <h2 className="text-4xl lg:text-5xl font-bold font-serif mb-4 text-white">
-            Featured Projects
+            Our Recent Work
           </h2>
           <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-            Explore our portfolio of completed projects, showcasing our expertise across residential, commercial, and industrial construction.
+            Explore our portfolio of completed joinery projects across Edinburgh, showcasing our expertise in bespoke kitchens, built-in furniture, and home renovations.
           </p>
         </motion.div>
 
