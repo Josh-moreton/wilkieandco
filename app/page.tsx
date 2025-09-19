@@ -39,7 +39,7 @@ export default function HomePage() {
             <h2 className="text-4xl lg:text-5xl font-bold font-serif text-white mb-4">
               Let's Discuss Your Project
             </h2>
-            <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+            <p className="text-xl text-slate-300 max-w-3xl mx-auto hidden md:block">
               Ready to transform your home with beautiful joinery? Get in touch today for a free consultation 
               and let's discuss how we can bring your vision to life with expert craftsmanship.
             </p>
