@@ -6,15 +6,15 @@ import { ProjectSlider } from "@/components/ProjectSlider/ProjectSlider"
 import { Testimonials } from "@/components/Testimonials/Testimonials"
 
 export const metadata: Metadata = {
-  title: "Wilkie & Co - Professional Construction Services",
-  description: "Building Excellence, Creating Foundations for Tomorrow. Professional construction services with over two decades of experience in residential, commercial, and industrial projects.",
+  title: "Wilkie & Co - Expert Joinery Services Edinburgh",
+  description: "Crafting Excellence, Creating Beautiful Interiors. Expert joinery services in Edinburgh specializing in bespoke kitchens, built-in furniture, and home renovations for individual homeowners.",
   twitter: {
     card: "summary_large_image",
   },
   openGraph: {
     url: "https://wilkieandco.vercel.app/",
-    title: "Wilkie & Co - Professional Construction Services",
-    description: "Building Excellence, Creating Foundations for Tomorrow. Professional construction services with over two decades of experience.",
+    title: "Wilkie & Co - Expert Joinery Services Edinburgh",
+    description: "Crafting Excellence, Creating Beautiful Interiors. Expert joinery services in Edinburgh for bespoke kitchens and home renovations.",
     images: [
       {
         width: 1200,
@@ -37,11 +37,11 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto px-6 py-16 lg:py-24 w-full">
           <div className="text-center mb-12">
             <h2 className="text-4xl lg:text-5xl font-bold font-serif text-white mb-4">
-              Get In Touch
+              Let's Discuss Your Project
             </h2>
             <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-              Ready to start your next construction project? Contact us today for a free consultation 
-              and let's discuss how we can bring your vision to life.
+              Ready to transform your home with beautiful joinery? Get in touch today for a free consultation 
+              and let's discuss how we can bring your vision to life with expert craftsmanship.
             </p>
           </div>
           <ContactForm />
