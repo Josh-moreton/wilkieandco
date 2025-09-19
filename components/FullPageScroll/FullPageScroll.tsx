@@ -59,6 +59,37 @@ export function FullPageScroll({ children, className = "" }: Readonly<FullPageSc
     []
   )
 
+  // Support scrolling to a section by element id via URL hash (e.g., #contact)
+  useEffect(() => {
+    const root = containerRef.current
+    if (!root) return
+
+    const scrollToHash = () => {
+      const hash = window.location.hash
+      if (!hash) return
+  const el = document.querySelector(hash)
+      if (!el) return
+      // Find the wrapper that corresponds to this element
+      const idx = sectionRefs.current.findIndex((ref) => ref && (ref === el || ref.contains(el)))
+      if (idx >= 0) {
+        const target = sectionRefs.current[idx]
+        if (target) root.scrollTo({ top: target.offsetTop, behavior: "smooth" })
+      } else {
+        // If element is itself a section wrapper
+        const wrapperIdx = sectionRefs.current.findIndex((ref) => ref === el)
+        if (wrapperIdx >= 0) {
+          const target = sectionRefs.current[wrapperIdx]
+          if (target) root.scrollTo({ top: target.offsetTop, behavior: "smooth" })
+        }
+      }
+    }
+
+    // Initial check and on hash changes
+    scrollToHash()
+    window.addEventListener("hashchange", scrollToHash)
+    return () => window.removeEventListener("hashchange", scrollToHash)
+  }, [])
+
   useEffect(() => {
     const root = containerRef.current
     if (!root) return

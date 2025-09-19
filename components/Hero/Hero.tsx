@@ -70,7 +70,7 @@ export function Hero() {
               className="border-slate-300 text-slate-300 hover:bg-slate-800 hover:text-white px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg"
               asChild
             >
-              <a href="/contact">Get Quote</a>
+              <a href="#contact">Get Quote</a>
             </Button>
           </motion.div>
         </div>

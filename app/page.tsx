@@ -33,7 +33,7 @@ export default function HomePage() {
       <div key="testimonials" className="w-full bg-transparent">
         <Testimonials />
       </div>
-  <div key="contact" className="w-screen bg-transparent min-h-[100dvh] flex items-center">
+  <div key="contact" id="contact" className="w-screen bg-transparent min-h-[100dvh] flex items-center">
         <div className="max-w-4xl mx-auto px-6 py-16 lg:py-24 w-full">
           <div className="text-center mb-12">
             <h2 className="text-4xl lg:text-5xl font-bold font-serif text-white mb-4">
