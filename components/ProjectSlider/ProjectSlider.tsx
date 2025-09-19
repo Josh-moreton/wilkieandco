@@ -85,7 +85,7 @@ export function ProjectSlider() {
           <h2 className="text-4xl lg:text-5xl font-bold font-serif mb-4 text-white">
             Our Recent Work
           </h2>
-          <p className="text-xl text-slate-300 max-w-3xl mx-auto hidden md:block">
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
             Explore our portfolio of completed joinery projects across Edinburgh, showcasing our expertise in bespoke kitchens, built-in furniture, and home renovations.
           </p>
         </motion.div>
