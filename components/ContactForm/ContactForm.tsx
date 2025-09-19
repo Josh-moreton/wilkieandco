@@ -58,6 +58,21 @@ export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [submitMessage, setSubmitMessage] = useState("")
+  
+  // Two-stage form state (mobile only)
+  const [currentStage, setCurrentStage] = useState<1 | 2>(1)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Check if we're on mobile
+  React.useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   const handleInputChange = (field: keyof ContactFormData) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -88,6 +103,60 @@ export function ContactForm() {
     
     setErrors({})
     return true
+  }
+
+  // Validate stage 1 (basic information)
+  const validateStage1 = (): boolean => {
+    const stage1Data = {
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      message: "" // Not required for stage 1
+    }
+    
+    const stage1Schema = z.object({
+      name: z.string().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
+      email: z.string().email("Invalid email address").optional().or(z.literal("")),
+      phone: z.string().optional().or(z.literal("")),
+      message: z.string().optional()
+    }).refine(
+      (data) => data.email || data.phone,
+      {
+        message: "Either email or phone number is required",
+        path: ["email"],
+      }
+    )
+    
+    const result = stage1Schema.safeParse(stage1Data)
+    
+    if (!result.success) {
+      const formattedErrors = result.error.format()
+      const newErrors: FormErrors = {}
+      
+      if (formattedErrors.name?._errors) newErrors.name = formattedErrors.name._errors
+      if (formattedErrors.email?._errors) newErrors.email = formattedErrors.email._errors
+      if (formattedErrors.phone?._errors) newErrors.phone = formattedErrors.phone._errors
+      if (formattedErrors._errors) newErrors.root = formattedErrors._errors
+      
+      setErrors(newErrors)
+      return false
+    }
+    
+    setErrors({})
+    return true
+  }
+
+  // Navigate to next stage
+  const handleNext = () => {
+    if (validateStage1()) {
+      setCurrentStage(2)
+    }
+  }
+
+  // Navigate to previous stage
+  const handleBack = () => {
+    setCurrentStage(1)
+    setErrors({}) // Clear any stage 2 errors
   }
 
   // Extracted helpers to keep submit handler simple
@@ -142,6 +211,8 @@ export function ContactForm() {
       setSubmitMessage(successResult.message || 'Your message has been sent successfully!')
       setFormData({ name: "", email: "", phone: "", message: "" })
       setErrors({})
+      // Reset to stage 1 after successful submission
+      setCurrentStage(1)
 
     } catch (error) {
       console.error('Contact form error:', error)
@@ -156,76 +227,182 @@ export function ContactForm() {
     }
   }
 
+  // Progress indicator for mobile
+  const ProgressIndicator = () => (
+    <div className="md:hidden mb-4">
+      <div className="flex items-center justify-center space-x-2 mb-2">
+        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${currentStage === 1 ? 'bg-yellow-500 text-slate-900' : 'bg-green-500 text-white'}`}>
+          1
+        </div>
+        <div className={`w-8 h-1 ${currentStage === 2 ? 'bg-yellow-500' : 'bg-slate-300'}`} />
+        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${currentStage === 2 ? 'bg-yellow-500 text-slate-900' : 'bg-slate-300 text-slate-600'}`}>
+          2
+        </div>
+      </div>
+      <p className="text-center text-sm text-slate-600 dark:text-slate-400">
+        Step {currentStage} of 2: {currentStage === 1 ? 'Basic Information' : 'Project Details'}
+      </p>
+    </div>
+  )
+
+  // Stage 1 fields (Basic Information)
+  const Stage1Fields = () => (
+    <div className="space-y-6">
+      <div className="space-y-2">
+        <Label htmlFor="name" className="text-slate-800 dark:text-slate-200">Name <span className="text-red-500">*</span></Label>
+        <Input
+          id="name"
+          type="text"
+          autoComplete="name"
+          value={formData.name}
+          onChange={handleInputChange('name')}
+          placeholder="Your full name"
+          className={"h-12 bg-white/70 dark:bg-slate-900/40 text-slate-900 dark:text-slate-100 " + (errors.name ? "border-red-500" : "")}
+          aria-invalid={Boolean(errors.name)}
+        />
+        {errors.name && <p className="text-sm text-red-500">{errors.name[0]}</p>}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="email" className="text-slate-800 dark:text-slate-200">Email <span className="text-sm text-muted-foreground">(required if no phone)</span></Label>
+        <Input
+          id="email"
+          type="email"
+          autoComplete="email"
+          value={formData.email}
+          onChange={handleInputChange('email')}
+          placeholder="your.email@example.com"
+          className={"h-12 bg-white/70 dark:bg-slate-900/40 text-slate-900 dark:text-slate-100 " + (errors.email ? "border-red-500" : "")}
+          aria-invalid={Boolean(errors.email)}
+        />
+        {errors.email && <p className="text-sm text-red-500">{errors.email[0]}</p>}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="phone" className="text-slate-800 dark:text-slate-200">Phone <span className="text-sm text-muted-foreground">(optional)</span></Label>
+        <Input
+          id="phone"
+          type="tel"
+          autoComplete="tel"
+          value={formData.phone}
+          onChange={handleInputChange('phone')}
+          placeholder="07123 456 789"
+          className={"h-12 bg-white/70 dark:bg-slate-900/40 text-slate-900 dark:text-slate-100 " + (errors.phone ? "border-red-500" : "")}
+          aria-invalid={Boolean(errors.phone)}
+        />
+        {errors.phone && <p className="text-sm text-red-500">{errors.phone[0]}</p>}
+      </div>
+    </div>
+  )
+
+  // Stage 2 fields (Project Details)
+  const Stage2Fields = () => (
+    <div className="space-y-6">
+      <div className="space-y-2">
+        <Label htmlFor="message" className="text-slate-800 dark:text-slate-200">Message <span className="text-red-500">*</span></Label>
+        <Textarea
+          id="message"
+          value={formData.message}
+          onChange={handleInputChange('message')}
+          placeholder="Tell us how we can help you..."
+          rows={6}
+          className={"min-h-[140px] bg-white/70 dark:bg-slate-900/40 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 dark:placeholder:text-slate-400 " + (errors.message ? "border-red-500" : "")}
+          aria-invalid={Boolean(errors.message)}
+        />
+        {errors.message && <p className="text-sm text-red-500">{errors.message[0]}</p>}
+        <p className="text-xs text-slate-500 dark:text-slate-400">{formData.message.length}/1000 characters</p>
+      </div>
+    </div>
+  )
+
+  // Desktop single-stage layout
+  const DesktopLayout = () => (
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <div className="space-y-2 md:col-span-2">
+        <Label htmlFor="name" className="text-slate-800 dark:text-slate-200">Name <span className="text-red-500">*</span></Label>
+        <Input
+          id="name"
+          type="text"
+          autoComplete="name"
+          value={formData.name}
+          onChange={handleInputChange('name')}
+          placeholder="Your full name"
+          className={"h-12 bg-white/70 dark:bg-slate-900/40 text-slate-900 dark:text-slate-100 " + (errors.name ? "border-red-500" : "")}
+          aria-invalid={Boolean(errors.name)}
+        />
+        {errors.name && <p className="text-sm text-red-500">{errors.name[0]}</p>}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="email" className="text-slate-800 dark:text-slate-200">Email <span className="text-sm text-muted-foreground">(required if no phone)</span></Label>
+        <Input
+          id="email"
+          type="email"
+          autoComplete="email"
+          value={formData.email}
+          onChange={handleInputChange('email')}
+          placeholder="your.email@example.com"
+          className={"h-12 bg-white/70 dark:bg-slate-900/40 text-slate-900 dark:text-slate-100 " + (errors.email ? "border-red-500" : "")}
+          aria-invalid={Boolean(errors.email)}
+        />
+        {errors.email && <p className="text-sm text-red-500">{errors.email[0]}</p>}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="phone" className="text-slate-800 dark:text-slate-200">Phone <span className="text-sm text-muted-foreground">(required if no email)</span></Label>
+        <Input
+          id="phone"
+          type="tel"
+          autoComplete="tel"
+          value={formData.phone}
+          onChange={handleInputChange('phone')}
+          placeholder="07123 456 789"
+          className={"h-12 bg-white/70 dark:bg-slate-900/40 text-slate-900 dark:text-slate-100 " + (errors.phone ? "border-red-500" : "")}
+          aria-invalid={Boolean(errors.phone)}
+        />
+        {errors.phone && <p className="text-sm text-red-500">{errors.phone[0]}</p>}
+      </div>
+
+      <div className="space-y-2 md:col-span-2">
+        <Label htmlFor="message" className="text-slate-800 dark:text-slate-200">Message <span className="text-red-500">*</span></Label>
+        <Textarea
+          id="message"
+          value={formData.message}
+          onChange={handleInputChange('message')}
+          placeholder="Tell us how we can help you..."
+          rows={6}
+          className={"min-h-[140px] bg-white/70 dark:bg-slate-900/40 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 dark:placeholder:text-slate-400 " + (errors.message ? "border-red-500" : "")}
+          aria-invalid={Boolean(errors.message)}
+        />
+        {errors.message && <p className="text-sm text-red-500">{errors.message[0]}</p>}
+        <p className="text-xs text-slate-500 dark:text-slate-400">{formData.message.length}/1000 characters</p>
+      </div>
+    </div>
+  )
+
   return (
     <Card className="mx-auto max-w-2xl border-slate-200/30 bg-slate-50/90 shadow-xl backdrop-blur supports-[backdrop-filter]:backdrop-blur dark:border-slate-700/50 dark:bg-slate-800/80 text-slate-900 dark:text-slate-100">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-serif">Contact Us</CardTitle>
-        <CardDescription className="text-slate-600 dark:text-slate-300">Get in touch. We’ll get back to you as soon as possible.</CardDescription>
+        <CardDescription className="text-slate-600 dark:text-slate-300">Get in touch. We'll get back to you as soon as possible.</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6" noValidate aria-live="polite" aria-busy={isSubmitting}>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="name" className="text-slate-800 dark:text-slate-200">Name <span className="text-red-500">*</span></Label>
-              <Input
-                id="name"
-                type="text"
-                autoComplete="name"
-                value={formData.name}
-                onChange={handleInputChange('name')}
-                placeholder="Your full name"
-                className={"h-12 bg-white/70 dark:bg-slate-900/40 text-slate-900 dark:text-slate-100 " + (errors.name ? "border-red-500" : "")}
-                aria-invalid={Boolean(errors.name)}
-              />
-              {errors.name && <p className="text-sm text-red-500">{errors.name[0]}</p>}
-            </div>
+          {/* Progress indicator for mobile */}
+          {isMobile && <ProgressIndicator />}
+          
+          {/* Form fields */}
+          {isMobile ? (
+            // Mobile: Two-stage layout
+            <>
+              {currentStage === 1 ? <Stage1Fields /> : <Stage2Fields />}
+            </>
+          ) : (
+            // Desktop: Single-stage layout
+            <DesktopLayout />
+          )}
 
-            <div className="space-y-2">
-              <Label htmlFor="email" className="text-slate-800 dark:text-slate-200">Email <span className="text-sm text-muted-foreground">(required if no phone)</span></Label>
-              <Input
-                id="email"
-                type="email"
-                autoComplete="email"
-                value={formData.email}
-                onChange={handleInputChange('email')}
-                placeholder="your.email@example.com"
-                className={"h-12 bg-white/70 dark:bg-slate-900/40 text-slate-900 dark:text-slate-100 " + (errors.email ? "border-red-500" : "")}
-                aria-invalid={Boolean(errors.email)}
-              />
-              {errors.email && <p className="text-sm text-red-500">{errors.email[0]}</p>}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="phone" className="text-slate-800 dark:text-slate-200">Phone <span className="text-sm text-muted-foreground">(required if no email)</span></Label>
-              <Input
-                id="phone"
-                type="tel"
-                autoComplete="tel"
-                value={formData.phone}
-                onChange={handleInputChange('phone')}
-                placeholder="07123 456 789"
-                className={"h-12 bg-white/70 dark:bg-slate-900/40 text-slate-900 dark:text-slate-100 " + (errors.phone ? "border-red-500" : "")}
-                aria-invalid={Boolean(errors.phone)}
-              />
-              {errors.phone && <p className="text-sm text-red-500">{errors.phone[0]}</p>}
-            </div>
-
-            <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="message" className="text-slate-800 dark:text-slate-200">Message <span className="text-red-500">*</span></Label>
-              <Textarea
-                id="message"
-                value={formData.message}
-                onChange={handleInputChange('message')}
-                placeholder="Tell us how we can help you..."
-                rows={6}
-                className={"min-h-[140px] bg-white/70 dark:bg-slate-900/40 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 dark:placeholder:text-slate-400 " + (errors.message ? "border-red-500" : "")}
-                aria-invalid={Boolean(errors.message)}
-              />
-              {errors.message && <p className="text-sm text-red-500">{errors.message[0]}</p>}
-              <p className="text-xs text-slate-500 dark:text-slate-400">{formData.message.length}/1000 characters</p>
-            </div>
-          </div>
-
+          {/* Error messages */}
           {errors.root && (
             <div className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-800 dark:border-red-900/40 dark:bg-red-950/40 dark:text-red-200">
               {errors.root.map((error) => (
@@ -234,21 +411,58 @@ export function ContactForm() {
             </div>
           )}
 
+          {/* Success message */}
           {submitStatus === 'success' && (
             <div className="rounded-md border border-green-200 bg-green-50 p-3 text-green-800 dark:border-green-900/40 dark:bg-green-950/40 dark:text-green-200">
               {submitMessage}
             </div>
           )}
 
+          {/* Error message */}
           {submitStatus === 'error' && (
             <div className="rounded-md border border-red-200 bg-red-50 p-3 text-red-800 dark:border-red-900/40 dark:bg-red-950/40 dark:text-red-200">
               {submitMessage}
             </div>
           )}
 
-          <Button type="submit" disabled={isSubmitting} className="w-full h-12 bg-yellow-500 text-slate-900 hover:bg-yellow-600 disabled:opacity-60">
-            {isSubmitting ? "Sending..." : "Send Message"}
-          </Button>
+          {/* Action buttons */}
+          {isMobile ? (
+            // Mobile: Stage-based navigation
+            <div className="flex gap-3">
+              {currentStage === 2 && (
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  onClick={handleBack}
+                  className="flex-1 h-12"
+                >
+                  Back
+                </Button>
+              )}
+              {currentStage === 1 ? (
+                <Button 
+                  type="button" 
+                  onClick={handleNext}
+                  className="flex-1 h-12 bg-yellow-500 text-slate-900 hover:bg-yellow-600"
+                >
+                  Next
+                </Button>
+              ) : (
+                <Button 
+                  type="submit" 
+                  disabled={isSubmitting} 
+                  className="flex-1 h-12 bg-yellow-500 text-slate-900 hover:bg-yellow-600 disabled:opacity-60"
+                >
+                  {isSubmitting ? "Sending..." : "Send Message"}
+                </Button>
+              )}
+            </div>
+          ) : (
+            // Desktop: Single submit button
+            <Button type="submit" disabled={isSubmitting} className="w-full h-12 bg-yellow-500 text-slate-900 hover:bg-yellow-600 disabled:opacity-60">
+              {isSubmitting ? "Sending..." : "Send Message"}
+            </Button>
+          )}
 
           <p className="text-center text-xs text-slate-600 dark:text-slate-300">Prefer email? Write to us at enquiries@wilkieandcojoinery.com</p>
         </form>
