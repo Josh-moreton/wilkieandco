@@ -87,7 +87,7 @@ export function FullPageScroll({ children, className = "" }: Readonly<FullPageSc
     <div
       ref={containerRef}
       className={
-        "relative h-[100dvh] w-full overflow-y-auto overscroll-y-contain snap-y snap-mandatory scroll-smooth " + className
+        "relative h-[100dvh] w-full overflow-y-auto overscroll-y-contain snap-y snap-mandatory scroll-smooth bg-transparent " + className
       }
       aria-label="Full page sections"
     >
@@ -125,8 +125,8 @@ export function FullPageScroll({ children, className = "" }: Readonly<FullPageSc
                 className={
                   "h-2 w-2 md:h-3 md:w-3 rounded-full transition-all " +
                   (i === activeIndex
-                    ? "bg-slate-900 dark:bg-white scale-110"
-                    : "bg-slate-300 dark:bg-slate-600 hover:bg-slate-400 dark:hover:bg-slate-500")
+                    ? "bg-white scale-110"
+                    : "bg-slate-400 hover:bg-slate-300")
                 }
               />
             </li>

@@ -30,16 +30,16 @@ export default function HomePage() {
     <FullPageScroll>
       <Hero key="hero" />
       <ProjectSlider key="projects" />
-      <div key="testimonials" className="w-full bg-white dark:bg-slate-800">
+      <div key="testimonials" className="w-full bg-transparent">
         <Testimonials />
       </div>
-  <div key="contact" className="w-screen bg-slate-50 dark:bg-slate-900 min-h-[100dvh] flex items-center">
+  <div key="contact" className="w-screen bg-transparent min-h-[100dvh] flex items-center">
         <div className="max-w-4xl mx-auto px-6 py-16 lg:py-24 w-full">
           <div className="text-center mb-12">
-            <h2 className="text-4xl lg:text-5xl font-bold font-serif text-slate-900 dark:text-white mb-4">
+            <h2 className="text-4xl lg:text-5xl font-bold font-serif text-white mb-4">
               Get In Touch
             </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+            <p className="text-xl text-slate-300 max-w-3xl mx-auto">
               Ready to start your next construction project? Contact us today for a free consultation 
               and let's discuss how we can bring your vision to life.
             </p>
