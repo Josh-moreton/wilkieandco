@@ -250,7 +250,7 @@ export function ContactForm() {
             {isSubmitting ? "Sending..." : "Send Message"}
           </Button>
 
-          <p className="text-center text-xs text-slate-600 dark:text-slate-300">Prefer email? Write to us at info@wilkieandco.com</p>
+          <p className="text-center text-xs text-slate-600 dark:text-slate-300">Prefer email? Write to us at enquiries@wilkieandcojoinery.com</p>
         </form>
       </CardContent>
     </Card>
