@@ -34,12 +34,12 @@ export default function HomePage() {
         <Testimonials />
       </div>
   <div key="contact" id="contact" className="w-screen bg-transparent min-h-[100dvh] flex items-center">
-        <div className="max-w-4xl mx-auto px-6 py-16 lg:py-24 w-full">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl lg:text-5xl font-bold font-serif text-white mb-4">
+        <div className="max-w-4xl mx-auto px-4 py-8 md:py-16 lg:py-24 w-full">
+          <div className="text-center mb-6 md:mb-12">
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold font-serif text-white mb-2 md:mb-4">
               Let's Discuss Your Project
             </h2>
-            <p className="text-xl text-slate-300 max-w-3xl mx-auto hidden md:block">
+            <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto hidden md:block">
               Ready to transform your home with beautiful joinery? Get in touch today for a free consultation 
               and let's discuss how we can bring your vision to life with expert craftsmanship.
             </p>
