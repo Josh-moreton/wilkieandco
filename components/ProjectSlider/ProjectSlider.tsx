@@ -72,7 +72,7 @@ export function ProjectSlider() {
   }
 
   return (
-    <section className="bg-slate-50 dark:bg-slate-900 min-h-[100dvh] w-screen flex items-center py-10 sm:py-16 lg:py-24 text-slate-900 dark:text-white">
+    <section className="bg-transparent min-h-[100dvh] w-screen flex items-center py-10 sm:py-16 lg:py-24 text-white">
       <div className="mx-auto w-full max-w-[min(1200px,92vw)] px-5 sm:px-6">
         {/* Section Header */}
         <motion.div
@@ -82,10 +82,10 @@ export function ProjectSlider() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl lg:text-5xl font-bold font-serif mb-4">
+          <h2 className="text-4xl lg:text-5xl font-bold font-serif mb-4 text-white">
             Featured Projects
           </h2>
-          <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
             Explore our portfolio of completed projects, showcasing our expertise across residential, commercial, and industrial construction.
           </p>
         </motion.div>
