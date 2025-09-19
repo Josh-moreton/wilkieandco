@@ -60,11 +60,7 @@ export function Tooltip({
       <RadixTooltip.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange} delayDuration={200}>
         <RadixTooltip.Trigger asChild>{children}</RadixTooltip.Trigger>
         <RadixTooltip.Portal>
-          <RadixTooltip.Content
-            side={side}
-            sideOffset={5}
-            className={cn(tooltipContent({ intent, size, className }))}
-          >
+          <RadixTooltip.Content side={side} sideOffset={5} className={cn(tooltipContent({ intent, size, className }))}>
             {explainer}
             {withArrow ? <RadixTooltip.Arrow className={cn(tooltipArrow({ intent, size, className }))} /> : null}
           </RadixTooltip.Content>

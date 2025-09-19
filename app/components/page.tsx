@@ -2,21 +2,17 @@ import { Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitl
 
 export default function ComponentsPage() {
   return (
-    <div className="container mx-auto p-8 space-y-8">
+    <div className="container mx-auto space-y-8 p-8">
       <div className="space-y-2">
-        <h1 className="text-3xl font-bold font-serif">Design System Components</h1>
-        <p className="text-muted-foreground">
-          Built with Radix UI, CVA, and Tailwind CSS using shadcn/ui patterns.
-        </p>
+        <h1 className="font-serif text-3xl font-bold">Design System Components</h1>
+        <p className="text-muted-foreground">Built with Radix UI, CVA, and Tailwind CSS using shadcn/ui patterns.</p>
       </div>
 
       <div className="grid gap-8 md:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle>Buttons</CardTitle>
-            <CardDescription>
-              Various button styles and sizes using the shadcn/ui Button component.
-            </CardDescription>
+            <CardDescription>Various button styles and sizes using the shadcn/ui Button component.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex flex-wrap gap-2">
@@ -37,9 +33,7 @@ export default function ComponentsPage() {
         <Card>
           <CardHeader>
             <CardTitle>Badges</CardTitle>
-            <CardDescription>
-              Status indicators and labels using the Badge component.
-            </CardDescription>
+            <CardDescription>Status indicators and labels using the Badge component.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex flex-wrap gap-2">
@@ -54,9 +48,7 @@ export default function ComponentsPage() {
         <Card>
           <CardHeader>
             <CardTitle>Input</CardTitle>
-            <CardDescription>
-              Text input field with proper styling and focus states.
-            </CardDescription>
+            <CardDescription>Text input field with proper styling and focus states.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <Input placeholder="Enter your text here..." />
@@ -74,8 +66,8 @@ export default function ComponentsPage() {
           </CardHeader>
           <CardContent>
             <p>
-              Cards provide a flexible container for grouping related content and actions.
-              They can contain text, images, buttons, and other components.
+              Cards provide a flexible container for grouping related content and actions. They can contain text,
+              images, buttons, and other components.
             </p>
           </CardContent>
         </Card>
@@ -89,9 +81,9 @@ export default function ComponentsPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-muted-foreground">
-            The existing Button and Tooltip components have been updated to use the new `cn` utility
-            while maintaining their original API for backward compatibility.
+          <p className="text-muted-foreground text-sm">
+            The existing Button and Tooltip components have been updated to use the new `cn` utility while maintaining
+            their original API for backward compatibility.
           </p>
         </CardContent>
       </Card>

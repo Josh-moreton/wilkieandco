@@ -7,14 +7,16 @@ import { Testimonials } from "@/components/Testimonials/Testimonials"
 
 export const metadata: Metadata = {
   title: "Wilkie & Co - Expert Joinery Services Edinburgh",
-  description: "Crafting Excellence, Creating Beautiful Interiors. Expert joinery services in Edinburgh specializing in bespoke kitchens, built-in furniture, and home renovations for individual homeowners.",
+  description:
+    "Crafting Excellence, Creating Beautiful Interiors. Expert joinery services in Edinburgh specializing in bespoke kitchens, built-in furniture, and home renovations for individual homeowners.",
   twitter: {
     card: "summary_large_image",
   },
   openGraph: {
     url: "https://wilkieandco.vercel.app/",
     title: "Wilkie & Co - Expert Joinery Services Edinburgh",
-    description: "Crafting Excellence, Creating Beautiful Interiors. Expert joinery services in Edinburgh for bespoke kitchens and home renovations.",
+    description:
+      "Crafting Excellence, Creating Beautiful Interiors. Expert joinery services in Edinburgh for bespoke kitchens and home renovations.",
     images: [
       {
         width: 1200,
@@ -33,15 +35,15 @@ export default function HomePage() {
       <div key="testimonials" className="w-full bg-transparent">
         <Testimonials />
       </div>
-  <div key="contact" id="contact" className="w-screen bg-transparent min-h-[100dvh] flex items-center">
-        <div className="max-w-4xl mx-auto px-4 py-8 md:py-16 lg:py-24 w-full">
-          <div className="text-center mb-6 md:mb-12">
-            <h2 className="hidden md:block text-2xl md:text-4xl lg:text-5xl font-bold font-serif text-white mb-2 md:mb-4">
+      <div key="contact" id="contact" className="flex min-h-[100dvh] w-screen items-center bg-transparent">
+        <div className="mx-auto w-full max-w-4xl px-4 py-8 md:py-16 lg:py-24">
+          <div className="mb-6 text-center md:mb-12">
+            <h2 className="mb-2 hidden font-serif text-2xl font-bold text-white md:mb-4 md:block md:text-4xl lg:text-5xl">
               Let's Discuss Your Project
             </h2>
-            <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto hidden md:block">
-              Ready to transform your home with beautiful joinery? Get in touch today for a free consultation 
-              and let's discuss how we can bring your vision to life with expert craftsmanship.
+            <p className="mx-auto hidden max-w-3xl text-lg text-slate-300 md:block md:text-xl">
+              Ready to transform your home with beautiful joinery? Get in touch today for a free consultation and let's
+              discuss how we can bring your vision to life with expert craftsmanship.
             </p>
           </div>
           <ContactForm />

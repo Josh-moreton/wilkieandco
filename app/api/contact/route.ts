@@ -9,42 +9,41 @@ const isConfigured = env.RESEND_API_KEY && env.CONTACT_EMAIL_TO
 const resend = isConfigured ? new Resend(env.RESEND_API_KEY) : null
 
 // Validation schema for contact form
-const contactFormSchema = z.object({
-  name: z.string().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
-  email: z.string().email("Invalid email address").optional().or(z.literal("")),
-  phone: z.string().optional().or(z.literal("")),
-  message: z.string().min(1, "Message is required").max(1000, "Message must be less than 1000 characters"),
-}).refine(
-  (data) => data.email || data.phone,
-  {
+const contactFormSchema = z
+  .object({
+    name: z.string().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
+    email: z.string().email("Invalid email address").optional().or(z.literal("")),
+    phone: z.string().optional().or(z.literal("")),
+    message: z.string().min(1, "Message is required").max(1000, "Message must be less than 1000 characters"),
+  })
+  .refine((data) => data.email || data.phone, {
     message: "Either email or phone number is required",
     path: ["email"], // This will show the error on the email field
-  }
-)
+  })
 
 export async function POST(request: NextRequest) {
   try {
     // Check if email service is configured
     if (!isConfigured) {
       return Response.json(
-        { 
-          error: "Email service not configured", 
-          message: "Please set RESEND_API_KEY and CONTACT_EMAIL_TO environment variables." 
+        {
+          error: "Email service not configured",
+          message: "Please set RESEND_API_KEY and CONTACT_EMAIL_TO environment variables.",
         },
         { status: 500 }
       )
     }
 
     const body = await request.json()
-    
+
     // Validate the request body
     const result = contactFormSchema.safeParse(body)
-    
+
     if (!result.success) {
       return Response.json(
-        { 
-          error: "Validation failed", 
-          details: result.error.format() 
+        {
+          error: "Validation failed",
+          details: result.error.format(),
         },
         { status: 400 }
       )
@@ -80,23 +79,31 @@ export async function POST(request: NextRequest) {
               <div class="value">${name}</div>
             </div>
             
-            ${email ? `
+            ${
+              email
+                ? `
             <div class="field">
               <div class="label">Email:</div>
               <div class="value">${email}</div>
             </div>
-            ` : ''}
+            `
+                : ""
+            }
             
-            ${phone ? `
+            ${
+              phone
+                ? `
             <div class="field">
               <div class="label">Phone:</div>
               <div class="value">${phone}</div>
             </div>
-            ` : ''}
+            `
+                : ""
+            }
             
             <div class="field">
               <div class="label">Message:</div>
-              <div class="message">${message.replace(/\n/g, '<br>')}</div>
+              <div class="message">${message.replace(/\n/g, "<br>")}</div>
             </div>
           </div>
         </body>
@@ -112,18 +119,17 @@ export async function POST(request: NextRequest) {
       replyTo: email || undefined, // Set reply-to if email is provided
     })
 
-    return Response.json({ 
-      success: true, 
-      message: "Your message has been sent successfully!" 
+    return Response.json({
+      success: true,
+      message: "Your message has been sent successfully!",
     })
-
   } catch (error) {
     console.error("Contact form error:", error)
-    
+
     return Response.json(
-      { 
-        error: "Failed to send message", 
-        message: "Please try again later or contact us directly." 
+      {
+        error: "Failed to send message",
+        message: "Please try again later or contact us directly.",
       },
       { status: 500 }
     )
