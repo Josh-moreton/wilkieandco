@@ -112,8 +112,8 @@ export function ProjectSlider() {
   }
 
   return (
-    <section className="relative min-h-0 w-screen bg-transparent py-6 text-white sm:py-10 md:flex md:min-h-[100svh] md:items-center lg:py-24">
-      <div className="mx-auto w-full max-w-[min(1200px,92vw)] px-5 sm:px-6">
+    <section className="relative min-h-[100dvh] w-screen bg-transparent text-white flex items-center">
+      <div className="mx-auto w-full max-w-[min(1200px,92vw)] px-5 py-6 sm:px-6 sm:py-10 lg:py-24">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
