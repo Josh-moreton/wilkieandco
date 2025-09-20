@@ -2,62 +2,113 @@
 
 import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useState } from "react"
-import { Badge, Button, Card, CardContent } from "@/components/ui"
 
 interface Project {
   id: number
-  title: string
-  category: string
-  description: string
   image: string
-  features: string[]
+  alt: string
 }
 
 const projects: Project[] = [
   {
     id: 1,
-    title: "Bespoke Kitchen Installation",
-    category: "Kitchen Joinery",
-    description:
-      "Complete kitchen transformation in Morningside featuring handcrafted oak cabinets, granite worktops, and integrated appliances tailored to the family's lifestyle.",
-    image: "/api/placeholder/600/400",
-    features: ["Handcrafted Oak", "Granite Worktops", "Bespoke Design"],
+    image: "/assets/images/IMG_0045.jpeg",
+    alt: "Bespoke Kitchen Installation",
   },
   {
     id: 2,
-    title: "Victorian Home Built-ins",
-    category: "Fitted Furniture",
-    description:
-      "Custom built-in wardrobes and shelving for a Victorian terrace in Stockbridge, designed to maximize space while respecting the home's period character.",
-    image: "/api/placeholder/600/400",
-    features: ["Period Sensitive", "Space Maximizing", "Custom Wardrobes"],
+    image: "/assets/images/IMG_0048.jpeg",
+    alt: "Victorian Home Built-ins",
   },
   {
     id: 3,
-    title: "Garden Room Extension",
-    category: "Home Extension",
-    description:
-      "Beautiful garden room addition in Bruntsfield with oak beams, bi-fold doors, and underfloor heating - perfect for year-round enjoyment.",
-    image: "/api/placeholder/600/400",
-    features: ["Oak Beams", "Bi-fold Doors", "Underfloor Heating"],
+    image: "/assets/images/IMG_0483.jpeg",
+    alt: "Garden Room Extension",
   },
   {
     id: 4,
-    title: "Loft Conversion",
-    category: "Home Renovation",
-    description:
-      "Complete loft conversion in Leith creating a master bedroom suite with fitted wardrobes, dormer windows, and a modern en-suite bathroom.",
-    image: "/api/placeholder/600/400",
-    features: ["Dormer Windows", "En-suite Bathroom", "Fitted Wardrobes"],
+    image: "/assets/images/IMG_0643.jpeg",
+    alt: "Loft Conversion",
   },
   {
     id: 5,
-    title: "Home Office Makeover",
-    category: "Interior Joinery",
-    description:
-      "Transformation of an unused bedroom in New Town into a stunning home office with built-in desk, bookcases, and storage solutions.",
-    image: "/api/placeholder/600/400",
-    features: ["Built-in Desk", "Custom Bookcases", "Storage Solutions"],
+    image: "/assets/images/IMG_1182.jpeg",
+    alt: "Home Office Makeover",
+  },
+  {
+    id: 6,
+    image: "/assets/images/IMG_1490.jpeg",
+    alt: "Custom Wardrobes",
+  },
+  {
+    id: 7,
+    image: "/assets/images/IMG_1491.jpeg",
+    alt: "Bathroom Renovation",
+  },
+  {
+    id: 8,
+    image: "/assets/images/IMG_1495.jpeg",
+    alt: "Fitted Shelving",
+  },
+  {
+    id: 9,
+    image: "/assets/images/IMG_1497.jpeg",
+    alt: "Kitchen Island",
+  },
+  {
+    id: 10,
+    image: "/assets/images/IMG_1498.jpeg",
+    alt: "Dining Room Built-ins",
+  },
+  {
+    id: 11,
+    image: "/assets/images/IMG_1499.jpeg",
+    alt: "Study Conversion",
+  },
+  {
+    id: 12,
+    image: "/assets/images/IMG_1500.jpeg",
+    alt: "Entrance Hall Storage",
+  },
+  {
+    id: 13,
+    image: "/assets/images/IMG_2307.jpeg",
+    alt: "Master Bedroom Suite",
+  },
+  {
+    id: 14,
+    image: "/assets/images/IMG_3198.jpeg",
+    alt: "Library Installation",
+  },
+  {
+    id: 15,
+    image: "/assets/images/IMG_3424.jpeg",
+    alt: "Open Plan Living",
+  },
+  {
+    id: 16,
+    image: "/assets/images/IMG_4314.jpeg",
+    alt: "Period Property Restoration",
+  },
+  {
+    id: 17,
+    image: "/assets/images/IMG_5188.jpeg",
+    alt: "Modern Kitchen Design",
+  },
+  {
+    id: 18,
+    image: "/assets/images/IMG_5189.jpeg",
+    alt: "Utility Room Organization",
+  },
+  {
+    id: 19,
+    image: "/assets/images/IMG_5479.jpeg",
+    alt: "Guest Bedroom Conversion",
+  },
+  {
+    id: 20,
+    image: "/assets/images/IMG_5482.jpeg",
+    alt: "Basement Workshop",
   },
 ]
 
@@ -66,7 +117,7 @@ export function ProjectSlider() {
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
 
-  // Auto-advance every 3 seconds on mobile
+  // Auto-advance every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % projects.length)
@@ -111,6 +162,18 @@ export function ProjectSlider() {
     }
   }
 
+  // Get visible projects for desktop grid (center + adjacent)
+  const getVisibleProjects = () => {
+    const prevIndex = (currentIndex - 1 + projects.length) % projects.length
+    const nextIndex = (currentIndex + 1) % projects.length
+    
+    return [
+      { ...projects[currentIndex], position: 'center' },
+      { ...projects[prevIndex], position: 'left' },
+      { ...projects[nextIndex], position: 'right' },
+    ]
+  }
+
   return (
     <section className="relative min-h-[100dvh] w-screen bg-transparent text-white flex items-center">
       <div className="mx-auto w-full max-w-[min(1200px,92vw)] px-5 py-6 sm:px-6 sm:py-10 lg:py-24">
@@ -123,98 +186,56 @@ export function ProjectSlider() {
           className="mb-6 text-center md:mb-12"
         >
           <h2 className="mb-4 font-serif text-3xl font-bold text-white md:text-4xl lg:text-5xl">Our Recent Work</h2>
-          <p className="mx-auto hidden max-w-3xl text-xl text-slate-300 md:block">
-            Explore our portfolio of completed joinery projects across Edinburgh, showcasing our expertise in bespoke
-            kitchens, built-in furniture, and home renovations.
+          <p className="mx-auto max-w-3xl text-xl text-slate-300">
+            Explore our portfolio of completed joinery projects across Edinburgh
           </p>
         </motion.div>
 
-        {/* Main Slider */}
-        <div className="relative md:min-h-[60vh]">
-          <div className="overflow-hidden rounded-2xl">
+        {/* Mobile Layout - Single Image Carousel */}
+        <div className="md:hidden">
+          <div
+            className="relative h-64 overflow-hidden rounded-2xl sm:h-80"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             <AnimatePresence mode="wait">
-              <motion.div
+              <motion.img
                 key={currentIndex}
+                src={projects[currentIndex]?.image}
+                alt={projects[currentIndex]?.alt}
+                className="absolute inset-0 h-full w-full object-cover"
                 initial={{ opacity: 0, x: 300 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -300 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
-              >
-                <Card className="border-0 shadow-2xl">
-                  <CardContent className="p-0">
-                    {/* Mobile: Image Only */}
-                    <div className="md:hidden">
-                      <div className="relative h-64 overflow-hidden bg-slate-200 dark:bg-slate-700">
-                        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-500 to-slate-700">
-                          <div className="text-center text-white">
-                            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-white/20">
-                              <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" />
-                              </svg>
-                            </div>
-                            <p className="text-lg font-medium">{projects[currentIndex]?.title}</p>
-                            <p className="text-sm opacity-80">Project Image</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Desktop: Full Content */}
-                    <div className="hidden gap-0 md:grid md:min-h-[50vh] lg:grid-cols-2">
-                      {/* Project Image */}
-                      <div className="relative h-48 overflow-hidden bg-slate-200 sm:h-64 lg:h-full dark:bg-slate-700">
-                        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-500 to-slate-700">
-                          <div className="text-center text-white">
-                            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-white/20">
-                              <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" />
-                              </svg>
-                            </div>
-                            <p className="text-lg font-medium">{projects[currentIndex]?.title}</p>
-                            <p className="text-sm opacity-80">Project Image</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Project Details */}
-                      <div className="flex flex-col justify-center p-6 sm:p-8 lg:p-12">
-                        <Badge variant="secondary" className="mb-4 w-fit">
-                          {projects[currentIndex]?.category}
-                        </Badge>
-
-                        <h3 className="mb-4 font-serif text-3xl font-bold lg:text-4xl">
-                          {projects[currentIndex]?.title}
-                        </h3>
-
-                        <p className="mb-6 text-base leading-relaxed text-slate-600 md:text-lg dark:text-slate-300">
-                          {projects[currentIndex]?.description}
-                        </p>
-
-                        <div className="mb-8">
-                          <h4 className="mb-3 text-sm font-semibold tracking-wide text-slate-900 uppercase dark:text-white">
-                            Key Features
-                          </h4>
-                          <div className="flex flex-wrap gap-2">
-                            {projects[currentIndex]?.features.map((feature) => (
-                              <Badge key={feature} variant="outline" className="text-xs">
-                                {feature}
-                              </Badge>
-                            ))}
-                          </div>
-                        </div>
-
-                        <Button className="w-fit" size="lg">
-                          View Work Details
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
+              />
             </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Desktop Layout - 3 Images Grid */}
+        <div className="hidden md:block">
+          <div className="grid grid-cols-3 gap-6 lg:gap-8">
+            {getVisibleProjects().map((project, index) => (
+              <motion.div
+                key={`${project.id}-${project.position}`}
+                className="relative h-64 overflow-hidden rounded-2xl lg:h-80"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <img 
+                  src={project.image} 
+                  alt={project.alt} 
+                  className="h-full w-full object-cover transition-transform duration-300 hover:scale-105" 
+                />
+                {/* Ring highlight for center image */}
+                {project.position === 'center' && (
+                  <div className="absolute inset-0 ring-2 ring-white/30 rounded-2xl" />
+                )}
+              </motion.div>
+            ))}
           </div>
         </div>
 
