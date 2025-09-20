@@ -9,18 +9,21 @@ The contact form allows users to get in touch by providing their name, contact i
 ## Features
 
 ### Form Fields
+
 - **Name** (required): User's full name
 - **Email** (optional): User's email address
-- **Phone** (optional): User's phone number  
+- **Phone** (optional): User's phone number
 - **Message** (required): User's message
 
 ### Validation Rules
+
 - Name and Message are required fields
 - At least one of Email or Phone must be provided
 - Email format validation when provided
 - Character limit for all fields (Name: 100, Message: 1000)
 
 ### Email Delivery
+
 - HTML-formatted emails sent via Resend
 - Professional email template with proper styling
 - Reply-to header set to user's email when provided
@@ -29,6 +32,7 @@ The contact form allows users to get in touch by providing their name, contact i
 ## Files Added/Modified
 
 ### New Files
+
 - `/app/contact/page.tsx` - Contact page component
 - `/app/api/contact/route.ts` - API endpoint for form submissions
 - `/components/ContactForm/ContactForm.tsx` - Main contact form component
@@ -36,6 +40,7 @@ The contact form allows users to get in touch by providing their name, contact i
 - `/.env.local.example` - Environment variables template
 
 ### Modified Files
+
 - `/app/page.tsx` - Added "Contact Us" button
 - `/components/ui/index.ts` - Exported new Textarea component
 - `/env.mjs` - Added contact form environment variables
@@ -57,11 +62,13 @@ ANALYZE=false
 ### Development Setup
 
 1. Copy the example environment file:
+
    ```bash
    cp .env.local.example .env.local
    ```
 
 2. Update the environment variables with your values:
+
    - Get a Resend API key from https://resend.com
    - Set the recipient email address
 
@@ -86,6 +93,7 @@ ANALYZE=false
 ## Technical Implementation
 
 ### Client-Side Features
+
 - Real-time validation feedback
 - Character counting for message field
 - Loading states during submission
@@ -93,12 +101,14 @@ ANALYZE=false
 - Form reset after successful submission
 
 ### Server-Side Features
+
 - Zod schema validation
 - HTML email template generation
 - Error handling and logging
 - Environment variable validation
 
 ### UI Components
+
 - Built with shadcn/ui components
 - Consistent design with existing site
 - Responsive layout
@@ -109,11 +119,13 @@ ANALYZE=false
 The contact form includes comprehensive error handling:
 
 ### Client-Side Errors
+
 - Field validation errors (required fields, email format)
 - Network connectivity issues
 - Server response errors
 
 ### Server-Side Errors
+
 - Missing environment variables
 - Invalid form data
 - Email service failures
@@ -130,11 +142,13 @@ The contact form includes comprehensive error handling:
 ## Deployment
 
 ### Vercel Deployment
+
 1. Add environment variables in Vercel dashboard
 2. Deploy the application
 3. Test the contact form in production
 
 ### Other Platforms
+
 1. Ensure environment variables are set
 2. Verify Resend API access
 3. Test email delivery
@@ -142,16 +156,19 @@ The contact form includes comprehensive error handling:
 ## Customization
 
 ### Styling
+
 - Modify `/components/ContactForm/ContactForm.tsx` for layout changes
 - Update `/components/ui/` components for design system changes
 - Customize email template in `/app/api/contact/route.ts`
 
 ### Validation
+
 - Update Zod schemas in both client and server files
 - Modify validation messages as needed
 - Add additional field validation rules
 
 ### Email Template
+
 - Customize HTML template in the API route
 - Add company branding
 - Modify email subject lines
@@ -161,10 +178,12 @@ The contact form includes comprehensive error handling:
 ### Common Issues
 
 1. **Environment Variables Not Set**
+
    - Error: "Email service not configured"
    - Solution: Set RESEND_API_KEY and CONTACT_EMAIL_TO in .env.local
 
 2. **Email Not Sending**
+
    - Check Resend API key validity
    - Verify recipient email address
    - Check server logs for errors

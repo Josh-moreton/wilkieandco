@@ -29,18 +29,16 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body className="font-sans">
         {/* Fixed background layer */}
-        <div className="fixed inset-0 w-screen h-[100dvh] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 z-0">
+        <div className="fixed inset-0 z-0 h-[100dvh] w-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
           {/* Background decorative elements */}
           <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-yellow-500 rounded-full filter blur-3xl" />
-            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500 rounded-full filter blur-3xl" />
+            <div className="absolute top-1/4 left-1/4 h-64 w-64 rounded-full bg-yellow-500 blur-3xl filter" />
+            <div className="absolute right-1/4 bottom-1/4 h-96 w-96 rounded-full bg-blue-500 blur-3xl filter" />
           </div>
         </div>
-        
+
         {/* Content layer */}
-        <div className="relative z-10">
-          {children}
-        </div>
+        <div className="relative z-10">{children}</div>
       </body>
     </html>
   )
