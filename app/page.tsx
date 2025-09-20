@@ -32,7 +32,7 @@ export default function HomePage() {
     <FullPageScroll>
       <Hero key="hero" />
       <ProjectSlider key="projects" />
-      <div key="testimonials" className="w-full bg-transparent">
+      <div key="testimonials" className="w-screen bg-transparent">
         <Testimonials />
       </div>
       <div key="contact" id="contact" className="flex min-h-[100dvh] w-screen items-center bg-transparent">

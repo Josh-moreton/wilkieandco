@@ -1,7 +1,7 @@
 "use client"
 
 import { AnimatePresence, motion } from "framer-motion"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Badge, Button, Card, CardContent } from "@/components/ui"
 
 interface Project {
@@ -63,6 +63,17 @@ const projects: Project[] = [
 
 export function ProjectSlider() {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [touchStart, setTouchStart] = useState<number | null>(null)
+  const [touchEnd, setTouchEnd] = useState<number | null>(null)
+
+  // Auto-advance every 3 seconds on mobile
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % projects.length)
+    }, 3000)
+
+    return () => clearInterval(interval)
+  }, [])
 
   const nextProject = () => {
     setCurrentIndex((prev) => (prev + 1) % projects.length)
@@ -76,9 +87,33 @@ export function ProjectSlider() {
     setCurrentIndex(index)
   }
 
+  // Touch handlers for swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null)
+    setTouchStart(e.targetTouches[0]?.clientX || 0)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0]?.clientX || 0)
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > 50
+    const isRightSwipe = distance < -50
+
+    if (isLeftSwipe) {
+      nextProject()
+    } else if (isRightSwipe) {
+      prevProject()
+    }
+  }
+
   return (
-    <section className="relative min-h-0 w-screen bg-transparent py-6 text-white sm:py-10 md:flex md:min-h-[100svh] md:items-center lg:py-24">
-      <div className="mx-auto w-full max-w-[min(1200px,92vw)] px-5 sm:px-6">
+    <section className="relative min-h-[100dvh] w-screen bg-transparent text-white flex items-center">
+      <div className="mx-auto w-full max-w-[min(1200px,92vw)] px-5 py-6 sm:px-6 sm:py-10 lg:py-24">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -104,10 +139,31 @@ export function ProjectSlider() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -300 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
               >
                 <Card className="border-0 shadow-2xl">
                   <CardContent className="p-0">
-                    <div className="grid gap-0 md:min-h-[50vh] lg:grid-cols-2">
+                    {/* Mobile: Image Only */}
+                    <div className="md:hidden">
+                      <div className="relative h-64 overflow-hidden bg-slate-200 dark:bg-slate-700">
+                        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-500 to-slate-700">
+                          <div className="text-center text-white">
+                            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-white/20">
+                              <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" />
+                              </svg>
+                            </div>
+                            <p className="text-lg font-medium">{projects[currentIndex]?.title}</p>
+                            <p className="text-sm opacity-80">Project Image</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Desktop: Full Content */}
+                    <div className="hidden gap-0 md:grid md:min-h-[50vh] lg:grid-cols-2">
                       {/* Project Image */}
                       <div className="relative h-48 overflow-hidden bg-slate-200 sm:h-64 lg:h-full dark:bg-slate-700">
                         <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-500 to-slate-700">
@@ -162,10 +218,10 @@ export function ProjectSlider() {
           </div>
         </div>
 
-        {/* Navigation Arrows - Positioned at screen edges */}
+        {/* Navigation Arrows - Desktop only */}
         <button
           onClick={prevProject}
-          className="absolute top-1/2 left-2 md:left-6 lg:left-12 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white shadow-lg transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 z-10"
+          className="absolute top-1/2 left-2 md:left-6 lg:left-12 hidden md:flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white shadow-lg transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 z-10"
           aria-label="Previous project"
         >
           <svg
@@ -180,7 +236,7 @@ export function ProjectSlider() {
 
         <button
           onClick={nextProject}
-          className="absolute top-1/2 right-2 md:right-6 lg:right-12 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white shadow-lg transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 z-10"
+          className="absolute top-1/2 right-2 md:right-6 lg:right-12 hidden md:flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white shadow-lg transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 z-10"
           aria-label="Next project"
         >
           <svg

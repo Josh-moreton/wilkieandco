@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import { ContactForm } from "@/components/ContactForm/ContactForm"
 
 export const metadata: Metadata = {
-  title: "Contact Us - Next.js Enterprise Boilerplate",
+  title: "Contact Us",
   description: "Get in touch with us. We'll get back to you as soon as possible.",
 }
 
