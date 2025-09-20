@@ -77,7 +77,7 @@ export function ProjectSlider() {
   }
 
   return (
-    <section className="min-h-0 w-screen bg-transparent py-6 text-white sm:py-10 md:flex md:min-h-[100svh] md:items-center lg:py-24">
+    <section className="relative min-h-0 w-screen bg-transparent py-6 text-white sm:py-10 md:flex md:min-h-[100svh] md:items-center lg:py-24">
       <div className="mx-auto w-full max-w-[min(1200px,92vw)] px-5 sm:px-6">
         {/* Section Header */}
         <motion.div
@@ -160,38 +160,38 @@ export function ProjectSlider() {
               </motion.div>
             </AnimatePresence>
           </div>
-
-          {/* Navigation Arrows */}
-          <button
-            onClick={prevProject}
-            className="absolute top-1/2 left-4 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white shadow-lg transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
-            aria-label="Previous project"
-          >
-            <svg
-              className="h-5 w-5 text-slate-600 dark:text-slate-300"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-
-          <button
-            onClick={nextProject}
-            className="absolute top-1/2 right-4 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white shadow-lg transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
-            aria-label="Next project"
-          >
-            <svg
-              className="h-5 w-5 text-slate-600 dark:text-slate-300"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
         </div>
+
+        {/* Navigation Arrows - Positioned at screen edges */}
+        <button
+          onClick={prevProject}
+          className="absolute top-1/2 left-2 md:left-6 lg:left-12 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white shadow-lg transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 z-10"
+          aria-label="Previous project"
+        >
+          <svg
+            className="h-5 w-5 text-slate-600 dark:text-slate-300"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <button
+          onClick={nextProject}
+          className="absolute top-1/2 right-2 md:right-6 lg:right-12 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white shadow-lg transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 z-10"
+          aria-label="Next project"
+        >
+          <svg
+            className="h-5 w-5 text-slate-600 dark:text-slate-300"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
 
         {/* Dots Navigation */}
         <div className="mt-6 flex justify-center space-x-2 sm:mt-8">
