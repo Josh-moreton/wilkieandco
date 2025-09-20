@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 const legacyButton = cva(
   [
     "justify-center",
-    "inline-flex", 
+    "inline-flex",
     "items-center",
     "rounded-xl",
     "text-center",
@@ -29,7 +29,7 @@ const legacyButton = cva(
       underline: { true: ["underline"], false: [] },
     },
     defaultVariants: {
-      intent: "primary", 
+      intent: "primary",
       size: "lg",
     },
   }

@@ -7,7 +7,7 @@ This project now includes a comprehensive design system built on top of Radix UI
 The design system provides:
 
 - **Consistent styling** with CSS variables and Tailwind CSS
-- **Accessible components** built with Radix UI primitives  
+- **Accessible components** built with Radix UI primitives
 - **Type-safe variants** using CVA for component variants
 - **Developer-friendly API** with the `cn()` utility for className composition
 - **Backward compatibility** for existing components
@@ -17,7 +17,7 @@ The design system provides:
 ### Core UI Components (`/components/ui/`)
 
 - **Button** - Various button styles and sizes with `asChild` prop support
-- **Badge** - Status indicators and labels 
+- **Badge** - Status indicators and labels
 - **Card** - Flexible container for content with header/footer sections
 - **Input** - Text input field with proper styling
 - **Label** - Form labels with accessible associations
@@ -61,7 +61,7 @@ import { Button } from "@/components/Button/Button"
 import { Tooltip } from "@/components/Tooltip/Tooltip"
 
 // These continue to work as before
-<Button href="/link" intent="primary" size="lg">
+;<Button href="/link" intent="primary" size="lg">
   Click me
 </Button>
 ```

@@ -15,9 +15,12 @@ export function FullPageScroll({ children, className = "" }: Readonly<FullPageSc
   const items = useMemo(() => React.Children.toArray(children), [children])
   const sectionRefs = useRef<Array<HTMLDivElement | null>>([])
 
-  const setRefAt = useCallback((idx: number) => (el: HTMLDivElement | null) => {
-    sectionRefs.current[idx] = el
-  }, [])
+  const setRefAt = useCallback(
+    (idx: number) => (el: HTMLDivElement | null) => {
+      sectionRefs.current[idx] = el
+    },
+    []
+  )
 
   useEffect(() => {
     const root = containerRef.current
@@ -45,19 +48,16 @@ export function FullPageScroll({ children, className = "" }: Readonly<FullPageSc
       }
     )
 
-  sectionRefs.current.forEach((el: HTMLDivElement | null) => el && observer.observe(el))
+    sectionRefs.current.forEach((el: HTMLDivElement | null) => el && observer.observe(el))
     return () => observer.disconnect()
   }, [items.length, activeIndex])
 
-  const scrollToIndex = useCallback(
-    (idx: number) => {
-      const root = containerRef.current
-      const target = sectionRefs.current[idx]
-      if (!root || !target) return
-      root.scrollTo({ top: target.offsetTop, behavior: "smooth" })
-    },
-    []
-  )
+  const scrollToIndex = useCallback((idx: number) => {
+    const root = containerRef.current
+    const target = sectionRefs.current[idx]
+    if (!root || !target) return
+    root.scrollTo({ top: target.offsetTop, behavior: "smooth" })
+  }, [])
 
   // Support scrolling to a section by element id via URL hash (e.g., #contact)
   useEffect(() => {
@@ -67,7 +67,7 @@ export function FullPageScroll({ children, className = "" }: Readonly<FullPageSc
     const scrollToHash = () => {
       const hash = window.location.hash
       if (!hash) return
-  const el = document.querySelector(hash)
+      const el = document.querySelector(hash)
       if (!el) return
       // Find the wrapper that corresponds to this element
       const idx = sectionRefs.current.findIndex((ref) => ref && (ref === el || ref.contains(el)))
@@ -118,49 +118,46 @@ export function FullPageScroll({ children, className = "" }: Readonly<FullPageSc
     <div
       ref={containerRef}
       className={
-        "relative h-[100dvh] w-full overflow-y-auto overscroll-y-contain snap-y snap-mandatory scroll-smooth bg-transparent " + className
+        "relative h-[100svh] w-full overflow-y-auto overscroll-y-contain snap-y snap-mandatory scroll-smooth bg-transparent " +
+        className
       }
       aria-label="Full page sections"
     >
       {items.map((child: React.ReactNode, idx: number) => {
-        const keyVal = (React.isValidElement(child) && child.key != null
-          ? child.key
-          : "missing-key") as React.Key
+        const keyVal = (React.isValidElement(child) && child.key != null ? child.key : "missing-key") as React.Key
         return (
           <motion.div
-          key={keyVal}
-          ref={setRefAt(idx)}
-          data-index={idx}
-          className="min-h-[100dvh] w-screen snap-start flex items-center [&>*]:min-h-[100dvh] [&>*]:h-full [&>*]:w-screen"
-          variants={variants}
-          initial="inactive"
-          animate={idx === activeIndex ? "active" : "inactive"}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-        >
-          {child}
-        </motion.div>
+            key={keyVal}
+            ref={setRefAt(idx)}
+            data-index={idx}
+            className="min-h-0 w-screen snap-start md:flex md:min-h-[100svh] md:items-center [&>*]:h-auto [&>*]:min-h-0 [&>*]:w-screen md:[&>*]:h-full md:[&>*]:min-h-[100svh]"
+            variants={variants}
+            initial="inactive"
+            animate={idx === activeIndex ? "active" : "inactive"}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
+            {child}
+          </motion.div>
         )
       })}
 
       {/* Dot Navigation */}
-      <div className="fixed right-3 md:right-6 top-1/2 -translate-y-1/2 z-50">
+      <div className="fixed top-1/2 right-3 z-50 -translate-y-1/2 md:right-6">
         <ul className="flex flex-col gap-3">
           {items.map((child, i) => {
-            const keyVal = (React.isValidElement(child) && child.key != null ? String(child.key) : `s-${i}`)
+            const keyVal = React.isValidElement(child) && child.key != null ? String(child.key) : `s-${i}`
             return (
-            <li key={`dot-${keyVal}`}>
-              <button
-                aria-label={`Go to section ${i + 1}`}
-                aria-current={i === activeIndex ? "true" : undefined}
-                onClick={() => scrollToIndex(i)}
-                className={
-                  "h-2 w-2 md:h-3 md:w-3 rounded-full transition-all " +
-                  (i === activeIndex
-                    ? "bg-white scale-110"
-                    : "bg-slate-400 hover:bg-slate-300")
-                }
-              />
-            </li>
+              <li key={`dot-${keyVal}`}>
+                <button
+                  aria-label={`Go to section ${i + 1}`}
+                  aria-current={i === activeIndex ? "true" : undefined}
+                  onClick={() => scrollToIndex(i)}
+                  className={
+                    "h-2 w-2 rounded-full transition-all md:h-3 md:w-3 " +
+                    (i === activeIndex ? "scale-110 bg-white" : "bg-slate-400 hover:bg-slate-300")
+                  }
+                />
+              </li>
             )
           })}
         </ul>
