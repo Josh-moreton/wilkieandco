@@ -93,10 +93,10 @@ export function Testimonials() {
           viewport={{ once: true }}
           className="text-center mb-10 sm:mb-16"
         >
-          <h2 className="text-4xl lg:text-5xl font-bold font-serif text-white mb-4">
+          <h2 className="text-4xl lg:text-5xl font-bold font-serif text-white mb-4 hidden md:block">
             What Our Clients Say
           </h2>
-          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto hidden md:block">
             Don't just take our word for it. Hear from Edinburgh homeowners who have trusted us with their joinery and renovation projects.
           </p>
         </motion.div>
