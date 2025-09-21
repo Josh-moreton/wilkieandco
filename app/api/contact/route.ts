@@ -3,6 +3,14 @@ import { Resend } from "resend"
 import { z } from "zod"
 import { env } from "@/env.mjs"
 import { isSmtpConfigured, sendContactFormEmails } from "@/lib/email"
+import { 
+  contactFormRateLimiter, 
+  detectSpamPatterns,
+  getClientIP, 
+  isValidEmail,
+  isValidPhone,
+  sanitizeInput
+} from "@/lib/security"
 
 // Check if email service is configured (prioritize SMTP, fallback to Resend)
 const isConfigured = isSmtpConfigured || (env.RESEND_API_KEY && env.CONTACT_EMAIL_TO)
@@ -26,6 +34,28 @@ const contactFormSchema = z
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting check
+    const clientIP = getClientIP(request)
+    const rateLimitResult = contactFormRateLimiter.isAllowed(clientIP)
+    
+    if (!rateLimitResult.allowed) {
+      const resetTime = rateLimitResult.resetTime ? new Date(rateLimitResult.resetTime).toISOString() : 'unknown'
+      return Response.json(
+        {
+          error: "Rate limit exceeded",
+          message: "Too many requests. Please wait before submitting again.",
+          resetTime,
+        },
+        { 
+          status: 429,
+          headers: {
+            'Retry-After': rateLimitResult.resetTime ? 
+              Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString() : '60'
+          }
+        }
+      )
+    }
+
     // Check if email service is configured
     if (!isConfigured) {
       return Response.json(
@@ -41,6 +71,24 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json()
 
+    // Basic security: limit request size
+    const requestSize = JSON.stringify(body).length
+    if (requestSize > 10000) { // 10KB limit
+      return Response.json(
+        {
+          error: "Request too large",
+          message: "Please reduce the length of your message.",
+        },
+        { status: 413 }
+      )
+    }
+
+    // Sanitize inputs before validation
+    if (body.name) body.name = sanitizeInput(body.name)
+    if (body.email) body.email = sanitizeInput(body.email)
+    if (body.phone) body.phone = sanitizeInput(body.phone)
+    if (body.message) body.message = sanitizeInput(body.message)
+
     // Validate the request body
     const result = contactFormSchema.safeParse(body)
 
@@ -55,6 +103,40 @@ export async function POST(request: NextRequest) {
     }
 
     const { name, email, phone, message } = result.data
+
+    // Additional security validations
+    if (email && !isValidEmail(email)) {
+      return Response.json(
+        {
+          error: "Invalid email format",
+          message: "Please provide a valid email address.",
+        },
+        { status: 400 }
+      )
+    }
+
+    if (phone && !isValidPhone(phone)) {
+      return Response.json(
+        {
+          error: "Invalid phone format",
+          message: "Please provide a valid phone number.",
+        },
+        { status: 400 }
+      )
+    }
+
+    // Spam detection
+    const combinedText = `${name} ${email} ${phone} ${message}`
+    if (detectSpamPatterns(combinedText)) {
+      console.warn(`Potential spam detected from IP ${clientIP}:`, { name, email, phone })
+      return Response.json(
+        {
+          error: "Message blocked",
+          message: "Your message appears to contain suspicious content. Please contact us directly if this is a legitimate enquiry.",
+        },
+        { status: 400 }
+      )
+    }
 
     // Use SMTP email service if configured, otherwise fallback to Resend
     if (isSmtpConfigured) {
