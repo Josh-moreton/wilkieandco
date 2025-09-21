@@ -89,8 +89,8 @@ const StarRating = ({ rating }: { rating: number }) => {
 
 export function Testimonials() {
   return (
-    <section className="flex min-h-[100dvh] w-screen items-center bg-transparent py-10 sm:py-16 lg:py-24">
-      <div className="mx-auto w-full max-w-[min(1200px,92vw)] px-5 sm:px-6">
+    <section className="relative flex min-h-[100dvh] w-screen items-center bg-transparent text-white">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
