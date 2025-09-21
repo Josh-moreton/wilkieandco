@@ -15,8 +15,6 @@ export const env = createEnv({
     SMTP_FROM_EMAIL: z.string().email().optional(),
     SMTP_FROM_NAME: z.string().min(1).optional(),
     CONTACT_EMAIL_TO: z.string().email().optional(),
-    // Keep legacy Resend for backwards compatibility during transition
-    RESEND_API_KEY: z.string().min(1).optional(),
   },
   client: {},
   runtimeEnv: {
@@ -28,6 +26,5 @@ export const env = createEnv({
     SMTP_FROM_EMAIL: process.env.SMTP_FROM_EMAIL,
     SMTP_FROM_NAME: process.env.SMTP_FROM_NAME,
     CONTACT_EMAIL_TO: process.env.CONTACT_EMAIL_TO,
-    RESEND_API_KEY: process.env.RESEND_API_KEY,
   },
 })
