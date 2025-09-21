@@ -12,7 +12,7 @@
   :root {
     /* Font families */
     --font-sans: inherit; /* Will use the font set by Next.js on body */
-    --font-serif: var(--font-serif, ui-serif, Georgia, Cambria, "Times New Roman", Times, serif);
+    --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
