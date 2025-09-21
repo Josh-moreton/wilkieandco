@@ -1,18 +1,5 @@
 import "styles/tailwind.css"
 import type { Metadata } from "next"
-import { Open_Sans, Playfair_Display } from "next/font/google"
-
-const openSans = Open_Sans({
-  subsets: ["latin"],
-  variable: "--font-open-sans",
-  display: "swap",
-})
-
-const playfairDisplay = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair-display",
-  display: "swap",
-})
 
 export const metadata: Metadata = {
   manifest: "/site.webmanifest",
@@ -31,9 +18,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${openSans.variable} ${playfairDisplay.variable}`}>
-      <head />
-      <body className={openSans.className}>
+    <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="font-sans">
         {/* Fixed background layer */}
         <div className="fixed inset-0 z-0 h-[100dvh] w-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
           {/* Background decorative elements */}
