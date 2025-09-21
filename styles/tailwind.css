@@ -11,8 +11,8 @@
 @layer base {
   :root {
     /* Font families */
-    --font-sans: 'Open Sans', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    --font-serif: 'Playfair Display', ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    --font-sans: inherit; /* Will use the font set by Next.js on body */
+    --font-serif: var(--font-serif, ui-serif, Georgia, Cambria, "Times New Roman", Times, serif);
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
