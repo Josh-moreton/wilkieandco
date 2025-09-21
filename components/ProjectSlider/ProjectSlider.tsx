@@ -1,12 +1,17 @@
 "use client"
 
 import { AnimatePresence, motion } from "framer-motion"
+import Image from "next/image"
 import { useEffect, useState } from "react"
 
 interface Project {
   id: number
   image: string
   alt: string
+}
+
+interface ProjectWithPosition extends Project {
+  position: 'left' | 'center' | 'right'
 }
 
 const projects: Project[] = [
@@ -163,14 +168,22 @@ export function ProjectSlider() {
   }
 
   // Get visible projects for desktop grid (center + adjacent)
-  const getVisibleProjects = () => {
+  const getVisibleProjects = (): ProjectWithPosition[] => {
     const prevIndex = (currentIndex - 1 + projects.length) % projects.length
     const nextIndex = (currentIndex + 1) % projects.length
     
+    const currentProject = projects[currentIndex]
+    const prevProject = projects[prevIndex]
+    const nextProject = projects[nextIndex]
+    
+    if (!currentProject || !prevProject || !nextProject) {
+      return []
+    }
+    
     return [
-      { ...projects[currentIndex], position: 'center' },
-      { ...projects[prevIndex], position: 'left' },
-      { ...projects[nextIndex], position: 'right' },
+      { ...currentProject, position: 'center' as const },
+      { ...prevProject, position: 'left' as const },
+      { ...nextProject, position: 'right' as const },
     ]
   }
 
@@ -225,10 +238,12 @@ export function ProjectSlider() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <img 
+                <Image 
                   src={project.image} 
                   alt={project.alt} 
-                  className="h-full w-full object-cover transition-transform duration-300 hover:scale-105" 
+                  fill
+                  className="object-cover transition-transform duration-300 hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
                 {/* Ring highlight for center image */}
                 {project.position === 'center' && (
