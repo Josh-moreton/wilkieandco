@@ -39,6 +39,7 @@ export default function HomePage() {
       <div
         key="cta-mobile"
         id="cta-mobile"
+        data-mobile-only
         className="relative flex min-h-[100dvh] w-screen items-center justify-center bg-transparent text-white md:hidden"
       >
         <div className="mx-auto w-full max-w-3xl px-4 pb-[env(safe-area-inset-bottom)]">
