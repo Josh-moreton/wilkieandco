@@ -62,9 +62,9 @@ export function MeetTheTeam() {
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0.5, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.3 }}
           viewport={{ once: true }}
           className="mb-8 pt-6 text-center sm:mb-16 sm:pt-0"
         >
@@ -159,10 +159,10 @@ export function MeetTheTeam() {
                   {mobileMembers.map((member, index) => (
                     <motion.div
                       key={member.id}
-                      initial={{ opacity: 0, x: 30 }}
+                      initial={{ opacity: 0.3, x: 20 }}
                       whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.5, delay: 0.4 + index * 0.05 }}
-                      viewport={{ once: true }}
+                      transition={{ duration: 0.3, delay: Math.min(index * 0.02, 0.08) }}
+                      viewport={{ once: true, amount: 0.3 }}
                       className="flex-none w-[80%] snap-start min-w-0 first:ml-4 last:mr-4"
                     >
                       {member.isFounder ? (

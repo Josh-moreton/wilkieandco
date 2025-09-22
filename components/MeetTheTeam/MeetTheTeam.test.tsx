@@ -18,8 +18,8 @@ describe("MeetTheTeam", () => {
 
   it("renders the founder profile prominently", () => {
     render(<MeetTheTeam />)
-    expect(screen.getByText("Euan Wilkie")).toBeInTheDocument()
-    expect(screen.getByText("Founder & Master Craftsman")).toBeInTheDocument()
+    expect(screen.getAllByText("Euan Wilkie")).toHaveLength(2) // Desktop and mobile versions
+    expect(screen.getAllByText("Founder & Master Craftsman")).toHaveLength(2) // Desktop and mobile versions
   })
 
   it("renders team section header", () => {
