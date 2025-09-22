@@ -89,7 +89,7 @@ const StarRating = ({ rating }: { rating: number }) => {
 
 export function Testimonials() {
   return (
-    <section className="relative flex min-h-[100dvh] w-screen items-start md:items-center bg-transparent text-white">
+    <section className="relative flex min-h-[100dvh] w-screen items-center bg-transparent text-white">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
