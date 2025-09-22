@@ -40,7 +40,7 @@ export const createTransporter = () => {
     throw new Error("SMTP configuration is incomplete")
   }
 
-  return nodemailer.createTransporter({
+  return nodemailer.createTransport({
     host: env.SMTP_HOST!,
     port: env.SMTP_PORT!,
     secure: false, // true for 465, false for other ports like 587
@@ -60,7 +60,7 @@ export const createTransporter = () => {
 // Send internal notification email
 export async function sendInternalNotificationEmail(data: ContactFormData) {
   const transporter = createTransporter()
-  
+
   const internalHtml = `
     <!DOCTYPE html>
     <html lang="en">
@@ -235,15 +235,15 @@ export async function sendInternalNotificationEmail(data: ContactFormData) {
             </div>
             
             <div class="timestamp">
-              Received: ${new Date().toLocaleString('en-GB', { 
-                timeZone: 'Europe/London',
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-              })}
+              Received: ${new Date().toLocaleString('en-GB', {
+    timeZone: 'Europe/London',
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  })}
             </div>
             
             <div class="action-buttons">
@@ -279,7 +279,7 @@ export async function sendContactFormEmails(data: ContactFormData) {
   try {
     // Send internal notification only
     const internalResult = await sendInternalNotificationEmail(data)
-    
+
     return {
       success: true,
       result: internalResult,
