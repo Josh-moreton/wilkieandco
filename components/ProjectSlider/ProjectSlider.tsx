@@ -117,7 +117,7 @@ const projects: Project[] = [
   },
 ]
 
-export function ProjectSlider() {
+export function ProjectSlider(props: React.ComponentProps<'section'>) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
@@ -188,7 +188,7 @@ export function ProjectSlider() {
   }
 
   return (
-    <section className="relative min-h-[100dvh] w-screen bg-transparent text-white flex items-center">
+    <section {...props} className={"relative min-h-[100dvh] w-screen bg-transparent text-white flex items-center" + (props.className ? " " + props.className : "")}>
       <div className="mx-auto w-full max-w-[min(1200px,92vw)] px-5 py-6 sm:px-6 sm:py-10 lg:py-24">
         {/* Section Header */}
         <motion.div
