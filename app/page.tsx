@@ -31,7 +31,7 @@ export default function HomePage() {
   return (
     <FullPageScroll>
       <Hero key="hero" />
-      <ProjectSlider key="projects" />
+      <ProjectSlider key="projects" id="projects" />
       <div key="testimonials" className="w-screen bg-transparent">
         <Testimonials />
       </div>

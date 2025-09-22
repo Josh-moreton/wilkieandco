@@ -16,7 +16,7 @@ class InMemoryRateLimiter {
   constructor(maxRequests: number = 3, windowMs: number = 60000) {
     this.maxRequests = maxRequests
     this.windowMs = windowMs
-    
+
     // Clean up expired entries every 5 minutes
     setInterval(() => this.cleanup(), 5 * 60 * 1000)
   }
@@ -36,8 +36,8 @@ class InMemoryRateLimiter {
 
     if (entry.count >= this.maxRequests) {
       // Rate limit exceeded
-      return { 
-        allowed: false, 
+      return {
+        allowed: false,
         resetTime: entry.resetTime,
         remaining: 0
       }
@@ -45,19 +45,19 @@ class InMemoryRateLimiter {
 
     // Increment count and allow request
     entry.count++
-    return { 
-      allowed: true, 
-      remaining: this.maxRequests - entry.count 
+    return {
+      allowed: true,
+      remaining: this.maxRequests - entry.count
     }
   }
 
   private cleanup() {
     const now = Date.now()
-    for (const [key, entry] of this.requests.entries()) {
+    this.requests.forEach((entry, key) => {
       if (now > entry.resetTime) {
         this.requests.delete(key)
       }
-    }
+    })
   }
 }
 
@@ -94,7 +94,7 @@ export function getClientIP(request: Request): string {
  */
 export function sanitizeInput(input: string): string {
   if (typeof input !== 'string') return ''
-  
+
   return input
     .trim()
     // Remove potentially dangerous HTML/script tags
@@ -131,7 +131,7 @@ export function detectSpamPatterns(text: string): boolean {
  */
 export function isValidEmail(email: string): boolean {
   if (!email || email.length > 254) return false
-  
+
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
   return emailRegex.test(email)
 }
@@ -141,10 +141,10 @@ export function isValidEmail(email: string): boolean {
  */
 export function isValidPhone(phone: string): boolean {
   if (!phone) return true // Phone is optional
-  
+
   // Remove all non-digit characters for validation
   const cleaned = phone.replace(/\D/g, '')
-  
+
   // UK phone numbers: 10-11 digits, international: 7-15 digits
   return cleaned.length >= 7 && cleaned.length <= 15
 }

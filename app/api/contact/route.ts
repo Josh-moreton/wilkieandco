@@ -1,10 +1,10 @@
 import { NextRequest } from "next/server"
 import { z } from "zod"
 import { isSmtpConfigured, sendContactFormEmails } from "@/lib/email"
-import { 
-  contactFormRateLimiter, 
+import {
+  contactFormRateLimiter,
   detectSpamPatterns,
-  getClientIP, 
+  getClientIP,
   isValidEmail,
   isValidPhone,
   sanitizeInput
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     // Rate limiting check
     const clientIP = getClientIP(request)
     const rateLimitResult = contactFormRateLimiter.isAllowed(clientIP)
-    
+
     if (!rateLimitResult.allowed) {
       const resetTime = rateLimitResult.resetTime ? new Date(rateLimitResult.resetTime).toISOString() : 'unknown'
       return Response.json(
@@ -40,10 +40,10 @@ export async function POST(request: NextRequest) {
           message: "Too many requests. Please wait before submitting again.",
           resetTime,
         },
-        { 
+        {
           status: 429,
           headers: {
-            'Retry-After': rateLimitResult.resetTime ? 
+            'Retry-After': rateLimitResult.resetTime ?
               Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString() : '60'
           }
         }
@@ -61,10 +61,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const body = await request.json()
+    const raw = await request.json()
 
     // Basic security: limit request size
-    const requestSize = JSON.stringify(body).length
+    const requestSize = JSON.stringify(raw).length
     if (requestSize > 10000) { // 10KB limit
       return Response.json(
         {
@@ -75,14 +75,18 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Sanitize inputs before validation
-    if (body.name) body.name = sanitizeInput(body.name)
-    if (body.email) body.email = sanitizeInput(body.email)
-    if (body.phone) body.phone = sanitizeInput(body.phone)
-    if (body.message) body.message = sanitizeInput(body.message)
+    // Sanitize inputs before validation (with runtime type guards)
+    const isRecord = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null
+    const input = isRecord(raw) ? raw : {}
+    const sanitized = {
+      name: typeof input.name === "string" ? sanitizeInput(input.name) : input.name,
+      email: typeof input.email === "string" ? sanitizeInput(input.email) : input.email,
+      phone: typeof input.phone === "string" ? sanitizeInput(input.phone) : input.phone,
+      message: typeof input.message === "string" ? sanitizeInput(input.message) : input.message,
+    }
 
     // Validate the request body
-    const result = contactFormSchema.safeParse(body)
+    const result = contactFormSchema.safeParse(sanitized)
 
     if (!result.success) {
       return Response.json(
