@@ -11,8 +11,22 @@ type FullPageScrollProps = {
 export function FullPageScroll({ children, className = "" }: Readonly<FullPageScrollProps>) {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const [activeIndex, setActiveIndex] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
 
   const items = useMemo(() => React.Children.toArray(children), [children])
+  const isMobileOnlyElement = (
+    node: React.ReactNode
+  ): node is React.ReactElement<{ "data-mobile-only"?: boolean }> => {
+    return React.isValidElement(node)
+  }
+  const visibleItems = useMemo(() => {
+    return items.filter((child) => {
+      if (isMobileOnlyElement(child) && child.props["data-mobile-only"]) {
+        return isMobile
+      }
+      return true
+    })
+  }, [items, isMobile])
   const sectionRefs = useRef<Array<HTMLDivElement | null>>([])
 
   const setRefAt = useCallback(
@@ -23,8 +37,17 @@ export function FullPageScroll({ children, className = "" }: Readonly<FullPageSc
   )
 
   useEffect(() => {
+    // Determine viewport for conditional sections (mobile-only)
+    const mq = window.matchMedia('(max-width: 767px)')
+    const update = () => setIsMobile(mq.matches)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
+
+  useEffect(() => {
     const root = containerRef.current
-    if (!root || items.length === 0) return
+    if (!root || visibleItems.length === 0) return
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -48,9 +71,10 @@ export function FullPageScroll({ children, className = "" }: Readonly<FullPageSc
       }
     )
 
-    sectionRefs.current.forEach((el: HTMLDivElement | null) => el && observer.observe(el))
+    const refs = sectionRefs.current.slice(0, visibleItems.length)
+    refs.forEach((el: HTMLDivElement | null) => el && observer.observe(el))
     return () => observer.disconnect()
-  }, [items.length, activeIndex])
+  }, [visibleItems.length, activeIndex])
 
   const scrollToIndex = useCallback((idx: number) => {
     const root = containerRef.current
@@ -107,7 +131,7 @@ export function FullPageScroll({ children, className = "" }: Readonly<FullPageSc
     // Make container focusable for keyboard nav
     root.tabIndex = 0
     return () => root.removeEventListener("keydown", onKey)
-  }, [activeIndex, items.length, scrollToIndex])
+  }, [activeIndex, visibleItems.length, scrollToIndex])
 
   const variants = {
     active: { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" },
@@ -123,14 +147,14 @@ export function FullPageScroll({ children, className = "" }: Readonly<FullPageSc
       }
       aria-label="Full page sections"
     >
-      {items.map((child: React.ReactNode, idx: number) => {
+      {visibleItems.map((child: React.ReactNode, idx: number) => {
         const keyVal = (React.isValidElement(child) && child.key != null ? child.key : "missing-key") as React.Key
         return (
           <motion.div
             key={keyVal}
             ref={setRefAt(idx)}
             data-index={idx}
-            className="h-[100dvh] w-screen snap-start flex items-center [&>*]:h-full [&>*]:min-h-[100dvh] [&>*]:w-screen"
+            className="h-[100dvh] w-screen snap-start flex items-center pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] [&>*]:h-full [&>*]:min-h-[100dvh] [&>*]:w-screen"
             variants={variants}
             initial="inactive"
             animate={idx === activeIndex ? "active" : "inactive"}
@@ -144,7 +168,7 @@ export function FullPageScroll({ children, className = "" }: Readonly<FullPageSc
       {/* Dot Navigation */}
       <div className="fixed top-1/2 right-3 z-50 -translate-y-1/2 md:right-6">
         <ul className="flex flex-col gap-3">
-          {items.map((child, i) => {
+          {visibleItems.map((child, i) => {
             const keyVal = React.isValidElement(child) && child.key != null ? String(child.key) : `s-${i}`
             return (
               <li key={`dot-${keyVal}`}>

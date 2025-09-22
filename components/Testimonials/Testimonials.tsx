@@ -89,7 +89,7 @@ const StarRating = ({ rating }: { rating: number }) => {
 
 export function Testimonials() {
   return (
-    <section className="relative flex min-h-[100dvh] w-screen items-center bg-transparent text-white">
+    <section className="relative flex min-h-[100dvh] w-screen items-start md:items-center bg-transparent text-white">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -106,8 +106,47 @@ export function Testimonials() {
           </p>
         </motion.div>
 
-        {/* Testimonials Grid */}
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {/* Mobile: Horizontal snap scrolling */}
+        <div className="md:hidden">
+          <div className="-mx-4">
+            <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-4 pb-4">
+              {testimonials.map((testimonial, index) => (
+                <motion.div
+                  key={testimonial.id}
+                  initial={{ opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.05 }}
+                  viewport={{ once: true }}
+                  className="flex-none w-[85%] snap-start min-w-0 first:ml-4 last:mr-4"
+                >
+                  <Card className="h-full border-slate-600/50 bg-slate-800/80 shadow-lg backdrop-blur min-w-0">
+                    <CardContent className="flex h-full flex-col p-5 sm:p-6 min-w-0">
+                      <div className="mb-6 flex-1">
+                        <div className="mb-2 text-slate-500">
+                          <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
+                          </svg>
+                        </div>
+                        <p className="italic leading-relaxed text-slate-300 whitespace-normal break-words hyphens-auto text-pretty min-w-0">"{testimonial.quote}"</p>
+                      </div>
+                      <div className="mb-4">
+                        <StarRating rating={testimonial.rating} />
+                      </div>
+                      <div>
+                        <h4 className="text-lg font-semibold text-white">{testimonial.name}</h4>
+                        <p className="text-sm text-slate-400">{testimonial.title}</p>
+                        <p className="text-sm font-medium text-slate-500">{testimonial.company}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop/Tablet: Grid */}
+        <div className="hidden grid gap-8 md:grid-cols-2 lg:grid-cols-3 md:grid">
           {testimonials.slice(0, 3).map((testimonial, index) => (
             <motion.div
               key={testimonial.id}
@@ -116,24 +155,19 @@ export function Testimonials() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <Card className="h-full border-slate-600/50 bg-slate-800/80 shadow-lg backdrop-blur transition-shadow duration-300 hover:shadow-xl">
-                <CardContent className="flex h-full flex-col p-6">
-                  {/* Quote */}
+              <Card className="h-full border-slate-600/50 bg-slate-800/80 shadow-lg backdrop-blur transition-shadow duration-300 hover:shadow-xl min-w-0">
+                <CardContent className="flex h-full flex-col p-6 min-w-0">
                   <div className="mb-6 flex-1">
                     <div className="mb-2 text-slate-500">
                       <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 32 32">
                         <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
                       </svg>
                     </div>
-                    <p className="leading-relaxed text-slate-300 italic">"{testimonial.quote}"</p>
+                    <p className="leading-relaxed text-slate-300 italic whitespace-normal break-words hyphens-auto text-pretty min-w-0">"{testimonial.quote}"</p>
                   </div>
-
-                  {/* Rating */}
                   <div className="mb-4">
                     <StarRating rating={testimonial.rating} />
                   </div>
-
-                  {/* Client Info */}
                   <div>
                     <h4 className="text-lg font-semibold text-white">{testimonial.name}</h4>
                     <p className="text-sm text-slate-400">{testimonial.title}</p>
@@ -151,11 +185,11 @@ export function Testimonials() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mt-16 text-center"
+          className="mt-6 md:mt-16 text-center pb-[env(safe-area-inset-bottom)] hidden md:block"
         >
-          <div className="rounded-2xl bg-slate-800/80 p-8 backdrop-blur lg:p-12">
-            <h3 className="mb-4 font-serif text-2xl font-bold text-white lg:text-3xl">Ready to Transform Your Home?</h3>
-            <p className="mx-auto mb-6 max-w-2xl text-lg text-slate-300">
+          <div className="rounded-2xl bg-slate-800/80 p-5 md:p-8 lg:p-12 backdrop-blur">
+            <h3 className="mb-4 font-serif text-2xl font-bold text-white md:text-3xl">Ready to Transform Your Home?</h3>
+            <p className="mx-auto mb-6 max-w-2xl text-sm md:text-lg text-slate-300 text-pretty">
               Join our satisfied Edinburgh homeowners and experience the Wilkie & Co difference. Contact us today for a
               free consultation on your joinery or renovation project.
             </p>
@@ -178,6 +212,18 @@ export function Testimonials() {
             </div>
           </div>
         </motion.div>
+        {/* Mobile-only next hint to CTA */}
+        <div className="md:hidden mt-4 flex justify-center">
+          <a
+            href="#cta-mobile"
+            className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm text-white backdrop-blur transition-colors hover:bg-white/20"
+          >
+            Next
+            <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+            </svg>
+          </a>
+        </div>
       </div>
     </section>
   )
