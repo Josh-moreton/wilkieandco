@@ -2,6 +2,7 @@ import { Metadata } from "next"
 import { ContactForm } from "@/components/ContactForm/ContactForm"
 import { FullPageScroll } from "@/components/FullPageScroll/FullPageScroll"
 import { Hero } from "@/components/Hero/Hero"
+import { MeetTheTeam } from "@/components/MeetTheTeam/MeetTheTeam"
 import { ProjectSlider } from "@/components/ProjectSlider/ProjectSlider"
 import { Testimonials } from "@/components/Testimonials/Testimonials"
 
@@ -34,6 +35,9 @@ export default function HomePage() {
       <ProjectSlider key="projects" id="projects" />
       <div key="testimonials" className="w-screen bg-transparent">
         <Testimonials />
+      </div>
+      <div key="meet-the-team" className="w-screen bg-transparent">
+        <MeetTheTeam />
       </div>
       {/* Mobile-only CTA gets its own page; desktop sees CTA inside Testimonials */}
       <div
