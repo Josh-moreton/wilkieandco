@@ -109,7 +109,7 @@ export function Testimonials() {
         {/* Mobile: Horizontal snap scrolling */}
         <div className="md:hidden">
           <div className="-mx-4">
-            <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4">
+            <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-4 pb-4">
               {testimonials.map((testimonial, index) => (
                 <motion.div
                   key={testimonial.id}
@@ -117,7 +117,7 @@ export function Testimonials() {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.05 }}
                   viewport={{ once: true }}
-                  className="flex-none w-[85%] snap-start min-w-0"
+                  className="flex-none w-[85%] snap-start min-w-0 first:ml-4 last:mr-4"
                 >
                   <Card className="h-full border-slate-600/50 bg-slate-800/80 shadow-lg backdrop-blur min-w-0">
                     <CardContent className="flex h-full flex-col p-5 sm:p-6 min-w-0">
