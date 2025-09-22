@@ -55,9 +55,10 @@ const teamMembers: TeamMember[] = [
 export function MeetTheTeam() {
   const founder = teamMembers.find(member => member.isFounder)
   const otherMembers = teamMembers.filter(member => !member.isFounder)
+  const mobileMembers = founder ? [founder, ...otherMembers] : otherMembers
 
   return (
-    <section className="relative flex min-h-[100dvh] w-screen items-center bg-transparent text-white">
+    <section className="relative flex h-[100dvh] max-h-[100dvh] w-screen items-center overflow-hidden bg-transparent text-white">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -65,10 +66,10 @@ export function MeetTheTeam() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mb-10 text-center sm:mb-16"
+          className="mb-8 pt-6 text-center sm:mb-16 sm:pt-0"
         >
-          <h2 className="mb-4 font-serif text-4xl font-bold text-white lg:text-5xl">Meet the Team</h2>
-          <p className="mx-auto max-w-3xl text-xl text-slate-300">
+          <h2 className="mb-3 font-serif text-3xl font-bold text-white md:text-4xl lg:text-5xl">Meet the Team</h2>
+          <p className="mx-auto max-w-3xl text-base text-slate-300 md:text-xl">
             Get to know the skilled craftspeople behind Wilkie & Co. Our experienced team brings passion, expertise, and 
             attention to detail to every project we undertake.
           </p>
@@ -82,23 +83,23 @@ export function MeetTheTeam() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
-              className="flex justify-center"
+              className="hidden md:flex justify-center"
             >
-              <Card className="w-full max-w-lg border-yellow-500/30 bg-slate-800/80 shadow-2xl backdrop-blur">
-                <CardContent className="p-8 text-center">
+              <Card className="w-full max-w-md md:max-w-lg border-yellow-500/30 bg-slate-800/80 shadow-2xl backdrop-blur">
+                <CardContent className="p-5 md:p-8 text-center">
                   <div className="mb-6 flex justify-center">
-                    <div className="relative h-32 w-32 overflow-hidden rounded-full border-4 border-yellow-500/50">
+                    <div className="relative h-24 w-24 md:h-32 md:w-32 overflow-hidden rounded-full border-4 border-yellow-500/50">
                       <Image
                         src={founder.image}
                         alt={founder.name}
                         fill
                         className="object-cover"
-                        sizes="128px"
+                        sizes="(min-width: 768px) 128px, 96px"
                       />
                     </div>
                   </div>
-                  <h3 className="mb-2 font-serif text-2xl font-bold text-white">{founder.name}</h3>
-                  <p className="mb-4 text-lg font-semibold text-yellow-500">{founder.title}</p>
+                  <h3 className="mb-2 font-serif text-xl md:text-2xl font-bold text-white">{founder.name}</h3>
+                  <p className="mb-4 text-base md:text-lg font-semibold text-yellow-500">{founder.title}</p>
                   <p className="text-slate-300 leading-relaxed">
                     Leading Wilkie & Co with decades of experience in traditional and modern joinery techniques, 
                     Euan brings unmatched expertise and craftsmanship to every project.
@@ -115,7 +116,7 @@ export function MeetTheTeam() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
-              className="text-center font-serif text-2xl font-semibold text-white md:text-3xl"
+              className="hidden md:block text-center font-serif text-2xl font-semibold text-white md:text-3xl"
             >
               Our Skilled Team
             </motion.h3>
@@ -151,36 +152,48 @@ export function MeetTheTeam() {
               ))}
             </div>
 
-            {/* Mobile: Horizontal Scrolling */}
+            {/* Mobile: Horizontal Scrolling (Founder + Team) */}
             <div className="md:hidden">
               <div className="-mx-4">
-                <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-4 pb-4">
-                  {otherMembers.map((member, index) => (
+                <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-4 pb-4 touch-pan-x">
+                  {mobileMembers.map((member, index) => (
                     <motion.div
                       key={member.id}
                       initial={{ opacity: 0, x: 30 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.5, delay: 0.4 + index * 0.05 }}
                       viewport={{ once: true }}
-                      className="flex-none w-[75%] snap-start min-w-0 first:ml-4 last:mr-4"
+                      className="flex-none w-[80%] snap-start min-w-0 first:ml-4 last:mr-4"
                     >
-                      <Card className="h-full border-slate-600/50 bg-slate-800/80 shadow-lg backdrop-blur min-w-0">
-                        <CardContent className="p-5 text-center min-w-0">
-                          <div className="mb-4 flex justify-center">
-                            <div className="relative h-16 w-16 overflow-hidden rounded-full border-2 border-slate-600">
-                              <Image
-                                src={member.image}
-                                alt={member.name}
-                                fill
-                                className="object-cover"
-                                sizes="64px"
-                              />
+                      {member.isFounder ? (
+                        <Card className="h-full border-yellow-500/30 bg-slate-800/80 shadow-lg backdrop-blur min-w-0">
+                          <CardContent className="p-5 text-center min-w-0">
+                            <div className="mb-4 flex justify-center">
+                              <div className="relative h-20 w-20 overflow-hidden rounded-full border-4 border-yellow-500/50">
+                                <Image src={member.image} alt={member.name} fill className="object-cover" sizes="80px" />
+                              </div>
                             </div>
-                          </div>
-                          <h4 className="mb-1 font-semibold text-white">{member.name}</h4>
-                          <p className="text-sm text-slate-400">{member.title}</p>
-                        </CardContent>
-                      </Card>
+                            <h4 className="mb-1 font-serif text-xl font-bold text-white">{member.name}</h4>
+                            <p className="text-sm font-semibold text-yellow-500">{member.title}</p>
+                            <p className="mt-3 text-sm text-slate-300">
+                              Leading Wilkie & Co with decades of experience in traditional and modern joinery
+                              techniques, Euan brings unmatched expertise and craftsmanship to every project.
+                            </p>
+                          </CardContent>
+                        </Card>
+                      ) : (
+                        <Card className="h-full border-slate-600/50 bg-slate-800/80 shadow-lg backdrop-blur min-w-0">
+                          <CardContent className="p-5 text-center min-w-0">
+                            <div className="mb-4 flex justify-center">
+                              <div className="relative h-16 w-16 overflow-hidden rounded-full border-2 border-slate-600">
+                                <Image src={member.image} alt={member.name} fill className="object-cover" sizes="64px" />
+                              </div>
+                            </div>
+                            <h4 className="mb-1 font-semibold text-white">{member.name}</h4>
+                            <p className="text-sm text-slate-400">{member.title}</p>
+                          </CardContent>
+                        </Card>
+                      )}
                     </motion.div>
                   ))}
                 </div>
