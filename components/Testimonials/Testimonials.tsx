@@ -185,7 +185,7 @@ export function Testimonials() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mt-6 md:mt-16 text-center pb-[env(safe-area-inset-bottom)]"
+          className="mt-6 md:mt-16 text-center pb-[env(safe-area-inset-bottom)] hidden md:block"
         >
           <div className="rounded-2xl bg-slate-800/80 p-5 md:p-8 lg:p-12 backdrop-blur">
             <h3 className="mb-4 font-serif text-2xl font-bold text-white md:text-3xl">Ready to Transform Your Home?</h3>
@@ -212,6 +212,18 @@ export function Testimonials() {
             </div>
           </div>
         </motion.div>
+        {/* Mobile-only next hint to CTA */}
+        <div className="md:hidden mt-4 flex justify-center">
+          <a
+            href="#cta-mobile"
+            className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm text-white backdrop-blur transition-colors hover:bg-white/20"
+          >
+            Next
+            <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+            </svg>
+          </a>
+        </div>
       </div>
     </section>
   )
