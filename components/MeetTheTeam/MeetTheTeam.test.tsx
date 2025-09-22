@@ -5,8 +5,8 @@ import { MeetTheTeam } from "./MeetTheTeam"
 // Mock framer-motion to avoid animation-related test issues
 vi.mock("framer-motion", () => ({
   motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-    h3: ({ children, ...props }: any) => <h3 {...props}>{children}</h3>,
+    div: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => <div {...props}>{children}</div>,
+    h3: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => <h3 {...props}>{children}</h3>,
   },
 }))
 
