@@ -62,8 +62,9 @@ export function Hero() {
             <Button
               size="lg"
               className="bg-yellow-500 px-6 py-3 text-base font-semibold text-slate-900 hover:bg-yellow-600 sm:px-8 sm:py-4 sm:text-lg"
+              asChild
             >
-              View Our Work
+              <a href="#projects">View Our Work</a>
             </Button>
             <Button
               variant="outline"
