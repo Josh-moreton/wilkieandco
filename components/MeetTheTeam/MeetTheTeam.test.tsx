@@ -18,7 +18,8 @@ describe("MeetTheTeam", () => {
 
   it("renders the founder profile prominently", () => {
     render(<MeetTheTeam />)
-    expect(screen.getByText("Euan Wilkie")).toBeInTheDocument()
+    // Founder is rendered as an h3; other instances may appear as h4 in grid/mobile
+    expect(screen.getByRole("heading", { level: 3, name: "Euan Wilkie" })).toBeInTheDocument()
     expect(screen.getByText("Founder & Master Craftsman")).toBeInTheDocument()
   })
 
