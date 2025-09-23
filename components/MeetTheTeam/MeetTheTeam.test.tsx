@@ -20,7 +20,8 @@ describe("MeetTheTeam", () => {
     render(<MeetTheTeam />)
     // Founder is rendered as an h3; other instances may appear as h4 in grid/mobile
     expect(screen.getByRole("heading", { level: 3, name: "Euan Wilkie" })).toBeInTheDocument()
-    expect(screen.getByText("Founder & Master Craftsman")).toBeInTheDocument()
+    // Title appears in both desktop and mobile variants; ensure at least one is present
+    expect(screen.getAllByText("Founder & Master Craftsman").length).toBeGreaterThan(0)
   })
 
   it("renders team section header", () => {
