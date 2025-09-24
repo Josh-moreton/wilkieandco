@@ -93,9 +93,9 @@ export function Testimonials() {
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0.5, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.3 }}
           viewport={{ once: true }}
           className="mb-10 text-center sm:mb-16"
         >
@@ -104,6 +104,8 @@ export function Testimonials() {
             Don't just take our word for it. Hear from Edinburgh homeowners who have trusted us with their joinery and
             renovation projects.
           </p>
+          {/* Mobile-specific visible header */}
+          <h2 className="mb-4 font-serif text-2xl font-bold text-white md:hidden">Client Testimonials</h2>
         </motion.div>
 
         {/* Mobile: Horizontal snap scrolling */}
@@ -113,10 +115,10 @@ export function Testimonials() {
               {testimonials.map((testimonial, index) => (
                 <motion.div
                   key={testimonial.id}
-                  initial={{ opacity: 0, x: 30 }}
+                  initial={{ opacity: 0.3, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
-                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: Math.min(index * 0.02, 0.1) }}
+                  viewport={{ once: true, amount: 0.3 }}
                   className="flex-none w-[85%] snap-start min-w-0 first:ml-4 last:mr-4"
                 >
                   <Card className="h-full border-slate-600/50 bg-slate-800/80 shadow-lg backdrop-blur min-w-0">

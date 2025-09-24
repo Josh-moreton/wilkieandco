@@ -134,8 +134,8 @@ export function FullPageScroll({ children, className = "" }: Readonly<FullPageSc
   }, [activeIndex, visibleItems.length, scrollToIndex])
 
   const variants = {
-    active: { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" },
-    inactive: { opacity: 0.6, y: 20, scale: 0.98, filter: "blur(1px)" },
+    active: { opacity: 1, y: 0, scale: 1 },
+    inactive: { opacity: 0.6, y: 20, scale: 0.98 },
   }
 
   return (
